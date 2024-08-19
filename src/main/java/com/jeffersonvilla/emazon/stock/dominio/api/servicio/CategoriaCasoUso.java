@@ -1,0 +1,36 @@
+package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
+
+import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
+import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
+
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NO_DISPONIBLE;
+
+public class CategoriaCasoUso implements ICategoriaServicePort {
+
+    private static final int TAMANO_NOMBRE = 50;
+    private static final int TAMANO_DESCRIPCION = 90;
+
+    private final ICategoriaPersistenciaPort persistencia;
+
+    public CategoriaCasoUso(ICategoriaPersistenciaPort persistencia) {
+        this.persistencia = persistencia;
+    }
+
+    @Override
+    public Categoria crearCategoria(Categoria categoria) {
+        if(persistencia.obtenerCategoriaPorNombre(categoria.getNombre()).isPresent()){
+            throw new CreacionCategoriaException(NOMBRE_NO_DISPONIBLE);
+        }
+        if(categoria.getNombre().length() > TAMANO_NOMBRE){
+            throw new CreacionCategoriaException(NOMBRE_TAMANO_MAXIMO);
+        }
+        if(categoria.getDescripcion().length() > TAMANO_DESCRIPCION){
+            throw new CreacionCategoriaException(DESCRIPCION_TAMANO_MAXIMO);
+        }
+        return persistencia.crearCategoria(categoria);
+    }
+}

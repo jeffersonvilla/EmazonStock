@@ -1,4 +1,4 @@
-package com.jeffersonvilla.emazon.EmazonStock;
+package com.jeffersonvilla.emazon.stock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
