@@ -1,18 +1,27 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
 
+import java.util.List;
+
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NO_DISPONIBLE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 
 public class CategoriaCasoUso implements ICategoriaServicePort {
 
     private static final int TAMANO_NOMBRE = 50;
     private static final int TAMANO_DESCRIPCION = 90;
+
+    public static final String ORDEN_ASCENDENTE = "ASC";
+    public static final String ORDEN_DESCENDENTE = "DES";
+
+    private static final int PAGINA_MINIMO = 0;
+    private static final int TAMANO_MINIMO = 1;
 
     private final ICategoriaPersistenciaPort persistencia;
 
@@ -32,5 +41,23 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
             throw new CreacionCategoriaException(DESCRIPCION_TAMANO_MAXIMO);
         }
         return persistencia.crearCategoria(categoria);
+    }
+
+    @Override
+    public List<Categoria> listarCategoria(int pagina, int tamano, String orden) {
+        if(pagina < PAGINA_MINIMO){
+            throw new ListarCategoriaException(PAGINA_VALOR_MINIMO);
+        }
+        if(tamano < TAMANO_MINIMO){
+            throw new ListarCategoriaException(TAMANO_VALOR_MINIMO);
+        }
+        if(!(orden.equals(ORDEN_ASCENDENTE) || orden.equals(ORDEN_DESCENDENTE))){
+            throw new ListarCategoriaException(ORDEN_NO_VALIDO);
+        }
+
+        if(orden.equals(ORDEN_ASCENDENTE)){
+            return persistencia.listarCategoriasOrdenAscendentePorNombre(pagina, tamano);
+        }
+        return persistencia.listarCategoriasOrdenDescendentePorNombre(pagina, tamano);
     }
 }
