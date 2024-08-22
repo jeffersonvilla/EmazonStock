@@ -28,6 +28,10 @@ public class CategoriaController {
     private final ICategoriaServicePort categoriaApi;
     private final CategoriaMapperRest mapper;
 
+    private static final String PAGINA_DEFAULT = "0";
+    private static final String TAMANO_DEFAULT = "10";
+    private static final String ORDEN_DEFAULT = "ASC";
+
     @Operation(summary = "Listar categorías",
             description = "Obtiene una lista de categorías con paginación y ordenamiento.")
     @ApiResponses(value = {
@@ -41,9 +45,9 @@ public class CategoriaController {
     })
     @GetMapping("listar")
     public ResponseEntity<List<ListarCategoriaResponseDto>> listarCategorias(
-            @RequestParam(defaultValue = "0") int pagina,
-            @RequestParam(defaultValue = "10") int tamano,
-            @RequestParam(defaultValue = "ASC") String orden
+            @RequestParam(defaultValue = PAGINA_DEFAULT) int pagina,
+            @RequestParam(defaultValue = TAMANO_DEFAULT) int tamano,
+            @RequestParam(defaultValue = ORDEN_DEFAULT) String orden
     ){
 
         return new ResponseEntity<>(

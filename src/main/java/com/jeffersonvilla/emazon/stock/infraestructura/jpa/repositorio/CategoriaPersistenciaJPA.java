@@ -17,6 +17,8 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
     private final CategoriaRepository categoriaRepository;
     private final CategoriaMapperJPA mapper;
 
+    private static final String SORT_NOMBRE = "nombre";
+
     @Override
     public Categoria crearCategoria(Categoria categoria) {
         return mapper.categoriaEntityToCategoria(
@@ -34,14 +36,14 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
 
     @Override
     public List<Categoria> listarCategoriasOrdenAscendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by("nombre").ascending();
+        Sort sort =  Sort.by(SORT_NOMBRE).ascending();
         Pageable pageable = PageRequest.of(pagina, tamano, sort);
         return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
     }
 
     @Override
     public List<Categoria> listarCategoriasOrdenDescendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by("nombre").descending();
+        Sort sort =  Sort.by(SORT_NOMBRE).descending();
         Pageable pageable = PageRequest.of(pagina, tamano, sort);
         return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
     }
