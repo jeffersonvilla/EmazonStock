@@ -2,6 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,21 @@ class ManejadorExcepcionesTest {
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
                 .handleCreacionCategoriaException(excepcion);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
+        assertEquals(mensajeError, response.getBody().message());
+    }
+
+    @Test
+    void testHandleListarCategoriaException() {
+        String mensajeError = "Error al listar las categorías";
+        ListarCategoriaException excepcion = new ListarCategoriaException(mensajeError);
+
+        ResponseEntity<RespuestaError> response = manejadorExcepciones
+                .handleListarCategoriaException(excepcion);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());

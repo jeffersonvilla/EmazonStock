@@ -1,6 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +10,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_DESCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NO_DISPONIBLE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -82,4 +87,72 @@ class CategoriaCasoUsoTest {
         assertEquals(DESCRIPCION_TAMANO_MAXIMO, exception.getMessage());
         verify(persistencia, never()).crearCategoria(categoria);
     }
+
+    @Test
+    void testListarCategoriaConParametrosValidosOrdenAscendente() {
+        List<Categoria> categorias = Arrays.asList(
+                new Categoria(1L, "Electrónica", "Categoría de dispositivos electrónicos"),
+                new Categoria(2L, "Hogar", "Categoría de productos para el hogar")
+        );
+        when(persistencia.listarCategoriasOrdenAscendentePorNombre(0, 10))
+                .thenReturn(categorias);
+
+        List<Categoria> resultado = categoriaCasoUso
+                .listarCategoria(0, 10, ORDEN_ASCENDENTE);
+
+        assertEquals(categorias, resultado);
+        verify(persistencia, times(1))
+                .listarCategoriasOrdenAscendentePorNombre(0, 10);
+    }
+
+    @Test
+    void testListarCategoriaConParametrosValidosOrdenDescendente() {
+        List<Categoria> categorias = Arrays.asList(
+                new Categoria(1L, "Electrónica", "Categoría de dispositivos electrónicos"),
+                new Categoria(2L, "Hogar", "Categoría de productos para el hogar")
+        );
+        when(persistencia.listarCategoriasOrdenDescendentePorNombre(0, 10))
+                .thenReturn(categorias);
+
+        List<Categoria> resultado = categoriaCasoUso
+                .listarCategoria(0, 10, ORDEN_DESCENDENTE);
+
+        assertEquals(categorias, resultado);
+        verify(persistencia, times(1))
+                .listarCategoriasOrdenDescendentePorNombre(0, 10);
+    }
+
+    @Test
+    void testListarCategoriaPaginaMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarCategoriaException.class, () -> {
+            categoriaCasoUso.listarCategoria(-1, 10, ORDEN_ASCENDENTE);
+        });
+
+        assertEquals(PAGINA_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
+
+    @Test
+    void testListarCategoriaTamanoMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarCategoriaException.class, () -> {
+            categoriaCasoUso.listarCategoria(0, 0, ORDEN_ASCENDENTE);
+        });
+
+        assertEquals(TAMANO_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
+
+    @Test
+    void testListarCategoriaConOrdenNoValidoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarCategoriaException.class, () -> {
+            categoriaCasoUso.listarCategoria(0, 10, "INVALIDO");
+        });
+
+        assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
+        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
+
 }

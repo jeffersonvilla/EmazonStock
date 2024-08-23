@@ -17,7 +17,7 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
     private final CategoriaRepository categoriaRepository;
     private final CategoriaMapperJPA mapper;
 
-    private static final String SORT_NOMBRE = "nombre";
+    public static final String SORT_NOMBRE = "nombre";
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {
