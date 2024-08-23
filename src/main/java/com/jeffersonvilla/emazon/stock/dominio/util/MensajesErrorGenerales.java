@@ -1,5 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
+import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_DESCENDENTE;
+
 public class MensajesErrorGenerales {
 
     protected MensajesErrorGenerales(){ throw new AssertionError(); }
@@ -14,4 +17,10 @@ public class MensajesErrorGenerales {
 
     public static final String DESCRIPCION_NULL = "Debe tener una descripción";
 
+    public static final String ORDEN_NO_VALIDO = "Ordenes disponibles son: '"
+            + ORDEN_ASCENDENTE +"' y '"+ ORDEN_DESCENDENTE +"'";
+
+    public static final String PAGINA_VALOR_MINIMO = "La pagina debe ser mayor o igual a cero.";
+
+    public static final String TAMANO_VALOR_MINIMO = "El tamaño de la pagina debe ser mayor o igual a uno.";
 }

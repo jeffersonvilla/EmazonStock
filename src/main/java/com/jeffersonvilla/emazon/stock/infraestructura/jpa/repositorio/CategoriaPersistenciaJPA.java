@@ -4,7 +4,11 @@ import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJPA;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -12,6 +16,8 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
 
     private final CategoriaRepository categoriaRepository;
     private final CategoriaMapperJPA mapper;
+
+    public static final String SORT_NOMBRE = "nombre";
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {
@@ -26,6 +32,20 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
     public Optional<Categoria> obtenerCategoriaPorNombre(String nombre) {
         return categoriaRepository.findByNombre(nombre)
                 .map(mapper::categoriaEntityToCategoria);
+    }
+
+    @Override
+    public List<Categoria> listarCategoriasOrdenAscendentePorNombre(int pagina, int tamano) {
+        Sort sort =  Sort.by(SORT_NOMBRE).ascending();
+        Pageable pageable = PageRequest.of(pagina, tamano, sort);
+        return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
+    }
+
+    @Override
+    public List<Categoria> listarCategoriasOrdenDescendentePorNombre(int pagina, int tamano) {
+        Sort sort =  Sort.by(SORT_NOMBRE).descending();
+        Pageable pageable = PageRequest.of(pagina, tamano, sort);
+        return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
     }
 
 }

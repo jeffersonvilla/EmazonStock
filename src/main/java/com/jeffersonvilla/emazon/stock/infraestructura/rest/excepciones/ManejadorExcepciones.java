@@ -2,6 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,14 @@ public class ManejadorExcepciones {
     @ExceptionHandler(CreacionCategoriaException.class)
     public ResponseEntity<RespuestaError> handleCreacionCategoriaException(
             CreacionCategoriaException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ListarCategoriaException.class)
+    public ResponseEntity<RespuestaError> handleListarCategoriaException(
+            ListarCategoriaException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));

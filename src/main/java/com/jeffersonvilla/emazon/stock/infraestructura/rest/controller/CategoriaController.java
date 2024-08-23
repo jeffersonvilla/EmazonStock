@@ -3,6 +3,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.controller;
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.CrearCategoriaRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.CrearCategoriaResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.ListarCategoriaResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.CategoriaMapperRest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,10 +15,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Categoria API", description = "Operaciones relacionadas con las categorías")
 @RequiredArgsConstructor
@@ -25,8 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("categoria")
 public class CategoriaController {
 
-    private final ICategoriaServicePort crearCategoriaApi;
+    private final ICategoriaServicePort categoriaApi;
     private final CategoriaMapperRest mapper;
+
+    private static final String PAGINA_DEFAULT = "0";
+    private static final String TAMANO_DEFAULT = "10";
+    private static final String ORDEN_DEFAULT = "ASC";
+
+    @Operation(summary = "Listar categorías",
+            description = "Obtiene una lista de categorías con paginación y ordenamiento.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de categorías obtenida exitosamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ListarCategoriaResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Parámetros de solicitud inválidos",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = "application/json"))
+    })
+    @GetMapping("listar")
+    public ResponseEntity<List<ListarCategoriaResponseDto>> listarCategorias(
+            @RequestParam(defaultValue = PAGINA_DEFAULT) int pagina,
+            @RequestParam(defaultValue = TAMANO_DEFAULT) int tamano,
+            @RequestParam(defaultValue = ORDEN_DEFAULT) String orden
+    ){
+
+        return new ResponseEntity<>(
+                categoriaApi.listarCategoria(pagina, tamano, orden)
+                        .stream()
+                        .map(mapper::categoriaToListarCategoriaResponseDto)
+                        .toList(),
+                HttpStatus.OK
+        );
+    }
 
     @Operation(summary = "Crear nueva categoría",
             description = "Crea una nueva categoría con los datos suministrados en el body.")
@@ -48,7 +79,7 @@ public class CategoriaController {
 
         return new ResponseEntity<>(
                 mapper.categoriaToCrearCategoriaResponseDto(
-                        crearCategoriaApi.crearCategoria(
+                        categoriaApi.crearCategoria(
                                 mapper.crearCategoriaRequestDtoToCategoria(categoriaDto)
                         )
                 ),
