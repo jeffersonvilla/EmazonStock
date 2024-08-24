@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
 public class MensajesErrorCategoria extends MensajesErrorGenerales{
-    protected MensajesErrorCategoria(){ throw new AssertionError(); }
+    protected MensajesErrorCategoria(){ throw new IllegalStateException("Clase utilitaria"); }
 
     public static final String NOMBRE_TAMANO_MAXIMO = "El nombre debe tener máximo 50 caracteres";
 

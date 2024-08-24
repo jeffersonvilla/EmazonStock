@@ -8,6 +8,8 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaExce
 
 import java.util.List;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
@@ -16,9 +18,6 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
 
     private static final int TAMANO_NOMBRE = 50;
     private static final int TAMANO_DESCRIPCION = 90;
-
-    public static final String ORDEN_ASCENDENTE = "ASC";
-    public static final String ORDEN_DESCENDENTE = "DES";
 
     private static final int PAGINA_MINIMO = 0;
     private static final int TAMANO_MINIMO = 1;
