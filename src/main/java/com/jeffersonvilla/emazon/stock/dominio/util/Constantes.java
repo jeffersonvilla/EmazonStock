@@ -1,6 +1,6 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-class Constantes {
+public class Constantes {
 
     private Constantes(){
         throw new IllegalStateException("Clase utilitaria");
