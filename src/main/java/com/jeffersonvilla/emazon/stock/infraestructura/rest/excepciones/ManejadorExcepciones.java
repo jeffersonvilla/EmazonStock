@@ -1,9 +1,9 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,17 +17,17 @@ import java.util.Map;
 @ControllerAdvice
 public class ManejadorExcepciones {
 
-    @ExceptionHandler(NombreNoValidoException.class)
+    @ExceptionHandler(NombreCategoriaNoValidoException.class)
     public ResponseEntity<RespuestaError> handleNombreNoValidoException(
-            NombreNoValidoException ex){
+            NombreCategoriaNoValidoException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
     }
 
-    @ExceptionHandler(DescriptionNoValidaException.class)
+    @ExceptionHandler(DescriptionCategoriaNoValidaException.class)
     public ResponseEntity<RespuestaError> handleDescriptionNoValidaException(
-            DescriptionNoValidaException ex){
+            DescriptionCategoriaNoValidaException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));

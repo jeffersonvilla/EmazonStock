@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.modelo;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales;
 
 public class Categoria {
@@ -12,16 +12,16 @@ public class Categoria {
 
     public Categoria(Long id, String nombre, String descripcion){
         if(nombre == null){
-            throw new NombreNoValidoException(MensajesErrorGenerales.NOMBRE_NULL);
+            throw new NombreCategoriaNoValidoException(MensajesErrorGenerales.NOMBRE_NULL);
         }
         if(nombre.isBlank()){
-            throw new NombreNoValidoException(MensajesErrorGenerales.NOMBRE_VACIO);
+            throw new NombreCategoriaNoValidoException(MensajesErrorGenerales.NOMBRE_VACIO);
         }
         if(descripcion == null){
-            throw new DescriptionNoValidaException(MensajesErrorGenerales.DESCRIPCION_NULL);
+            throw new DescriptionCategoriaNoValidaException(MensajesErrorGenerales.DESCRIPCION_NULL);
         }
         if(descripcion.isBlank()){
-            throw new DescriptionNoValidaException(MensajesErrorGenerales.DESCRIPCION_VACIA);
+            throw new DescriptionCategoriaNoValidaException(MensajesErrorGenerales.DESCRIPCION_VACIA);
         }
         this.id = id;
         this.nombre = nombre;

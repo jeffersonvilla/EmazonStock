@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.modelo;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class CategoriaTests {
 
     @Test
     void testNombreNullLanzaExcepcion() {
-        Exception exception = assertThrows(NombreNoValidoException.class, () -> {
+        Exception exception = assertThrows(NombreCategoriaNoValidoException.class, () -> {
             new Categoria(1L, null, "Descripción válida");
         });
         assertEquals(MensajesErrorGenerales.NOMBRE_NULL, exception.getMessage());
@@ -29,7 +29,7 @@ class CategoriaTests {
 
     @Test
     void testNombreVacioLanzaExcepcion() {
-        Exception exception = assertThrows(NombreNoValidoException.class, () -> {
+        Exception exception = assertThrows(NombreCategoriaNoValidoException.class, () -> {
             new Categoria(1L, "", "Descripción válida");
         });
         assertEquals(MensajesErrorGenerales.NOMBRE_VACIO, exception.getMessage());
@@ -37,7 +37,7 @@ class CategoriaTests {
 
     @Test
     void testDescripcionNullLanzaExcepcion() {
-        Exception exception = assertThrows(DescriptionNoValidaException.class, () -> {
+        Exception exception = assertThrows(DescriptionCategoriaNoValidaException.class, () -> {
             new Categoria(1L, "Nombre válido", null);
         });
         assertEquals(MensajesErrorGenerales.DESCRIPCION_NULL, exception.getMessage());
@@ -45,7 +45,7 @@ class CategoriaTests {
 
     @Test
     void testDescripcionVaciaLanzaExcepcion() {
-        Exception exception = assertThrows(DescriptionNoValidaException.class, () -> {
+        Exception exception = assertThrows(DescriptionCategoriaNoValidaException.class, () -> {
             new Categoria(1L, "Nombre válido", "");
         });
         assertEquals(MensajesErrorGenerales.DESCRIPCION_VACIA, exception.getMessage());
