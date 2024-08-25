@@ -1,9 +1,9 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ class ManejadorExcepcionesTest {
     @Test
     void testHandleNombreNoValidoException() {
         String mensajeError = "El nombre no es válido";
-        NombreNoValidoException excepcion = new NombreNoValidoException(mensajeError);
+        NombreCategoriaNoValidoException excepcion = new NombreCategoriaNoValidoException(mensajeError);
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
                 .handleNombreNoValidoException(excepcion);
@@ -42,7 +42,7 @@ class ManejadorExcepcionesTest {
     @Test
     void testHandleDescriptionNoValidaException() {
         String mensajeError = "La descripción no es válida";
-        DescriptionNoValidaException excepcion = new DescriptionNoValidaException(mensajeError);
+        DescriptionCategoriaNoValidaException excepcion = new DescriptionCategoriaNoValidaException(mensajeError);
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
                 .handleDescriptionNoValidaException(excepcion);

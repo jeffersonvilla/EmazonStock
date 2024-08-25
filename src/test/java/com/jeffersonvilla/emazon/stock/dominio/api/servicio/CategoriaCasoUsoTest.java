@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_ASCENDENTE;
-import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;

@@ -1,11 +1,11 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_ASCENDENTE;
-import static com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 
 public class MensajesErrorGenerales {
 
-    protected MensajesErrorGenerales(){ throw new AssertionError(); }
+    protected MensajesErrorGenerales(){ throw new IllegalStateException("Clase utilitaria"); }
 
     public static final String NOMBRE_VACIO = "El nombre debe tener caractéres legibles";
 
