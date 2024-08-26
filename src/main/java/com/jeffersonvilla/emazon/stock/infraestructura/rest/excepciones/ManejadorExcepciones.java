@@ -21,7 +21,7 @@ import java.util.Map;
 public class ManejadorExcepciones {
 
     @ExceptionHandler(NombreCategoriaNoValidoException.class)
-    public ResponseEntity<RespuestaError> handleNombreNoValidoException(
+    public ResponseEntity<RespuestaError> handleNombreCategoriaNoValidoException(
             NombreCategoriaNoValidoException ex){
 
         return ResponseEntity.badRequest().body(
@@ -29,7 +29,7 @@ public class ManejadorExcepciones {
     }
 
     @ExceptionHandler(DescriptionCategoriaNoValidaException.class)
-    public ResponseEntity<RespuestaError> handleDescriptionNoValidaException(
+    public ResponseEntity<RespuestaError> handleDescriptionCategoriaNoValidaException(
             DescriptionCategoriaNoValidaException ex){
 
         return ResponseEntity.badRequest().body(
