@@ -1,23 +1,19 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 
 public class CategoriaCasoUso implements ICategoriaServicePort {
-
-    private static final int TAMANO_NOMBRE = 50;
-    private static final int TAMANO_DESCRIPCION = 90;
 
     private static final int PAGINA_MINIMO = 0;
     private static final int TAMANO_MINIMO = 1;
@@ -33,10 +29,10 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
         if(persistencia.obtenerCategoriaPorNombre(categoria.getNombre()).isPresent()){
             throw new CreacionCategoriaException(NOMBRE_NO_DISPONIBLE);
         }
-        if(categoria.getNombre().length() > TAMANO_NOMBRE){
+        if(categoria.getNombre().length() > TAMANO_MAXIMO_NOMBRE_CATEGORIA){
             throw new CreacionCategoriaException(NOMBRE_TAMANO_MAXIMO);
         }
-        if(categoria.getDescripcion().length() > TAMANO_DESCRIPCION){
+        if(categoria.getDescripcion().length() > TAMANO_MAXIMO_DESCRIPCION_CATEGORIA){
             throw new CreacionCategoriaException(DESCRIPCION_TAMANO_MAXIMO);
         }
         return persistencia.crearCategoria(categoria);

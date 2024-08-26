@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_DESCRIPCION_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_NOMBRE_CATEGORIA;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +20,9 @@ public class CategoriaEntity {
     @Column(name = "id_categoria", columnDefinition = "INT")
     private Long id;
 
-    @Column(name = "nombre", length = 50, nullable = false, unique = true)
+    @Column(name = "nombre", length = TAMANO_MAXIMO_NOMBRE_CATEGORIA, nullable = false, unique = true)
     private String nombre;
 
-    @Column(name = "descripcion", length = 90, nullable = false)
+    @Column(name = "descripcion", length = TAMANO_MAXIMO_DESCRIPCION_CATEGORIA, nullable = false)
     private String descripcion;
 }

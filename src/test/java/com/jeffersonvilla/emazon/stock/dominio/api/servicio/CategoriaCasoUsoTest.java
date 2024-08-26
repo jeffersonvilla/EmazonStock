@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
 import org.junit.jupiter.api.BeforeEach;

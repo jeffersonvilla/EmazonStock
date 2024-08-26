@@ -1,9 +1,14 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-public class MensajesErrorCategoria extends MensajesErrorGenerales{
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_DESCRIPCION_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_NOMBRE_CATEGORIA;
+
+public class MensajesErrorCategoria {
     protected MensajesErrorCategoria(){ throw new IllegalStateException("Clase utilitaria"); }
 
-    public static final String NOMBRE_TAMANO_MAXIMO = "El nombre debe tener máximo 50 caracteres";
+    public static final String NOMBRE_TAMANO_MAXIMO = "El nombre debe tener máximo "+
+            TAMANO_MAXIMO_NOMBRE_CATEGORIA +" caracteres";
 
-    public static final String DESCRIPCION_TAMANO_MAXIMO = "La descripcion debe tener máximo 90 caracteres";
+    public static final String DESCRIPCION_TAMANO_MAXIMO = "La descripción debe tener máximo "+
+            TAMANO_MAXIMO_DESCRIPCION_CATEGORIA +" caracteres";
 }

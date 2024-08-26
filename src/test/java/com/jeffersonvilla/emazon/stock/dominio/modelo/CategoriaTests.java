@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.modelo;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.DescriptionCategoriaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales;
 import org.junit.jupiter.api.Test;
 

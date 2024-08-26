@@ -1,12 +1,12 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.controller;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.CrearCategoriaRequestDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.CrearCategoriaResponseDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.ListarCategoriaResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.categoria.CrearCategoriaRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.categoria.CrearCategoriaResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.categoria.ListarCategoriaResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.CategoriaMapperRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
