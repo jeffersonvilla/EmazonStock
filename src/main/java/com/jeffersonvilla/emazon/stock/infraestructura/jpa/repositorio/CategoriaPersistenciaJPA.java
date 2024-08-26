@@ -11,13 +11,13 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
+
 @RequiredArgsConstructor
 public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
 
     private final CategoriaRepository categoriaRepository;
     private final CategoriaMapperJPA mapper;
-
-    public static final String SORT_NOMBRE = "nombre";
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {

@@ -6,6 +6,7 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCateg
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.DescripcionMarcaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.NombreMarcaNoValidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +72,14 @@ public class ManejadorExcepciones {
     @ExceptionHandler(CreacionMarcaException.class)
     public ResponseEntity<RespuestaError> handleCreacionMarcaException(
             CreacionMarcaException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ListarMarcaException.class)
+    public ResponseEntity<RespuestaError> handleListarMarcaException(
+            ListarMarcaException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
