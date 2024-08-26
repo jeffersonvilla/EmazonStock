@@ -1,9 +1,12 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.DescriptionCategoriaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.DescripcionMarcaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.NombreMarcaNoValidoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -44,6 +47,30 @@ public class ManejadorExcepciones {
     @ExceptionHandler(ListarCategoriaException.class)
     public ResponseEntity<RespuestaError> handleListarCategoriaException(
             ListarCategoriaException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(NombreMarcaNoValidoException.class)
+    public ResponseEntity<RespuestaError> handleNombreMarcaNoValidoException(
+            NombreMarcaNoValidoException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DescripcionMarcaNoValidaException.class)
+    public ResponseEntity<RespuestaError> handleDescripcionMarcaNoValidaException(
+            DescripcionMarcaNoValidaException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(CreacionMarcaException.class)
+    public ResponseEntity<RespuestaError> handleCreacionMarcaException(
+            CreacionMarcaException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));

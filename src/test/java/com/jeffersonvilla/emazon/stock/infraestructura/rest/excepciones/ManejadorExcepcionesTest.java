@@ -1,9 +1,9 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescriptionCategoriaNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.ListarCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreCategoriaNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.DescriptionCategoriaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

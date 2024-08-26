@@ -1,4 +1,4 @@
-package com.jeffersonvilla.emazon.stock.dominio.excepciones;
+package com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria;
 
 public class NombreCategoriaNoValidoException extends RuntimeException{
 
