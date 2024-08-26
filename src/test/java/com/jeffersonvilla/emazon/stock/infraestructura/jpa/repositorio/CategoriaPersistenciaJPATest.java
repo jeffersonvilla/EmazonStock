@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.CategoriaPersistenciaJPA.SORT_NOMBRE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

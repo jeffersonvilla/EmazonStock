@@ -15,9 +15,6 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerale
 
 public class CategoriaCasoUso implements ICategoriaServicePort {
 
-    private static final int PAGINA_MINIMO = 0;
-    private static final int TAMANO_MINIMO = 1;
-
     private final ICategoriaPersistenciaPort persistencia;
 
     public CategoriaCasoUso(ICategoriaPersistenciaPort persistencia) {

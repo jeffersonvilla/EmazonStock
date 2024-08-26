@@ -1,5 +1,6 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IMarcaPersistenciaPort;
@@ -9,8 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
@@ -84,4 +89,70 @@ class MarcaCasoUsoTest {
         verify(persistencia, never()).crearMarca(marca);
     }
 
+    @Test
+    void testListarMarcaConParametrosValidosOrdenAscendente() {
+        List<Marca> marcas = Arrays.asList(
+                new Marca(1L, "Marca A", "Marca de dispositivos electrónicos"),
+                new Marca(2L, "Marca B", "Marca de productos para el hogar")
+        );
+        when(persistencia.listarMarcasOrdenAscendentePorNombre(0, 10))
+                .thenReturn(marcas);
+
+        List<Marca> resultado = marcaCasoUso
+                .listarMarca(0, 10, ORDEN_ASCENDENTE);
+
+        assertEquals(marcas, resultado);
+        verify(persistencia, times(1))
+                .listarMarcasOrdenAscendentePorNombre(0, 10);
+    }
+
+    @Test
+    void testListarMarcaConParametrosValidosOrdenDescendente() {
+        List<Marca> marcas = Arrays.asList(
+                new Marca(1L, "Marca A", "Marca de dispositivos electrónicos"),
+                new Marca(2L, "Marca B", "Marca de productos para el hogar")
+        );
+        when(persistencia.listarMarcasOrdenDescendentePorNombre(0, 10))
+                .thenReturn(marcas);
+
+        List<Marca> resultado = marcaCasoUso
+                .listarMarca(0, 10, ORDEN_DESCENDENTE);
+
+        assertEquals(marcas, resultado);
+        verify(persistencia, times(1))
+                .listarMarcasOrdenDescendentePorNombre(0, 10);
+    }
+
+    @Test
+    void testListarMarcaPaginaMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarMarcaException.class, () -> {
+            marcaCasoUso.listarMarca(-1, 10, ORDEN_ASCENDENTE);
+        });
+
+        assertEquals(PAGINA_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
+
+    @Test
+    void testListarMarcaTamanoMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarMarcaException.class, () -> {
+            marcaCasoUso.listarMarca(0, 0, ORDEN_ASCENDENTE);
+        });
+
+        assertEquals(TAMANO_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
+
+    @Test
+    void testListarMarcaConOrdenNoValidoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarMarcaException.class, () -> {
+            marcaCasoUso.listarMarca(0, 10, "INVALIDO");
+        });
+
+        assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
+        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+    }
 }

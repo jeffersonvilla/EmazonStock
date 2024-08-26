@@ -3,8 +3,14 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IMarcaPersistenciaPort;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.MarcaMapperJPA;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
+
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
 
@@ -29,5 +35,19 @@ public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
     public Optional<Marca> obtenerMarcaPorNombre(String nombre) {
         return marcaRepository.findByNombre(nombre)
                 .map(mapper::marcaEntityToMarca);
+    }
+
+    @Override
+    public List<Marca> listarMarcasOrdenAscendentePorNombre(int pagina, int tamano) {
+        Sort sort =  Sort.by(SORT_NOMBRE).ascending();
+        Pageable pageable = PageRequest.of(pagina, tamano, sort);
+        return marcaRepository.findAll(pageable).map(mapper::marcaEntityToMarca).toList();
+    }
+
+    @Override
+    public List<Marca> listarMarcasOrdenDescendentePorNombre(int pagina, int tamano) {
+        Sort sort =  Sort.by(SORT_NOMBRE).descending();
+        Pageable pageable = PageRequest.of(pagina, tamano, sort);
+        return marcaRepository.findAll(pageable).map(mapper::marcaEntityToMarca).toList();
     }
 }
