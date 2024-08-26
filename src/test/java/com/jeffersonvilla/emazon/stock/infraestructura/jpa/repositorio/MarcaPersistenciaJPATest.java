@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -76,5 +80,73 @@ class MarcaPersistenciaJPATest {
         assertFalse(resultado.isPresent());
         verify(marcaRepository, times(1)).findByNombre(nombre);
         verify(mapper, never()).marcaEntityToMarca(any());
+    }
+
+    @Test
+    void testListarMarcasOrdenAscendentePorNombre() {
+        int pagina = 0;
+        int tamano = 10;
+
+        MarcaEntity marcaEntity1 = mock(MarcaEntity.class);
+        MarcaEntity marcaEntity2 = mock(MarcaEntity.class);
+        List<MarcaEntity> marcaEntities = Arrays.asList(marcaEntity1, marcaEntity2);
+
+        Page<MarcaEntity> page = new PageImpl<>(marcaEntities);
+
+        Marca marca1 = mock(Marca.class);
+        Marca marca2 = mock(Marca.class);
+
+        when(marcaRepository.findAll(any(Pageable.class))).thenReturn(page);
+        when(mapper.marcaEntityToMarca(marcaEntity1)).thenReturn(marca1);
+        when(mapper.marcaEntityToMarca(marcaEntity2)).thenReturn(marca2);
+
+
+        List<Marca> resultado = marcaPersistenciaJPA
+                .listarMarcasOrdenAscendentePorNombre(pagina, tamano);
+
+
+        assertEquals(2, resultado.size());
+        assertEquals(marca1, resultado.get(0));
+        assertEquals(marca2, resultado.get(1));
+
+        Pageable expectedPageable = PageRequest.of(pagina, tamano, Sort.by(SORT_NOMBRE).ascending());
+        verify(marcaRepository, times(1)).findAll(expectedPageable);
+
+        verify(mapper, times(1)).marcaEntityToMarca(marcaEntity1);
+        verify(mapper, times(1)).marcaEntityToMarca(marcaEntity2);
+    }
+
+    @Test
+    void testListarMarcasOrdenDescendentePorNombre() {
+        int pagina = 0;
+        int tamano = 10;
+
+        MarcaEntity marcaEntity1 = mock(MarcaEntity.class);
+        MarcaEntity marcaEntity2 = mock(MarcaEntity.class);
+        List<MarcaEntity> marcaEntities = Arrays.asList(marcaEntity1, marcaEntity2);
+
+        Page<MarcaEntity> page = new PageImpl<>(marcaEntities);
+
+        Marca marca1 = mock(Marca.class);
+        Marca marca2 = mock(Marca.class);
+
+        when(marcaRepository.findAll(any(Pageable.class))).thenReturn(page);
+        when(mapper.marcaEntityToMarca(marcaEntity1)).thenReturn(marca1);
+        when(mapper.marcaEntityToMarca(marcaEntity2)).thenReturn(marca2);
+
+
+        List<Marca> resultado = marcaPersistenciaJPA
+                .listarMarcasOrdenDescendentePorNombre(pagina, tamano);
+
+
+        assertEquals(2, resultado.size());
+        assertEquals(marca1, resultado.get(0));
+        assertEquals(marca2, resultado.get(1));
+
+        Pageable expectedPageable = PageRequest.of(pagina, tamano, Sort.by(SORT_NOMBRE).descending());
+        verify(marcaRepository, times(1)).findAll(expectedPageable);
+
+        verify(mapper, times(1)).marcaEntityToMarca(marcaEntity1);
+        verify(mapper, times(1)).marcaEntityToMarca(marcaEntity2);
     }
 }

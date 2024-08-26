@@ -6,6 +6,7 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCateg
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.DescripcionMarcaNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.NombreMarcaNoValidoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -119,11 +120,26 @@ class ManejadorExcepcionesTest {
 
     @Test
     void testHandleCreacionMarcaException() {
-        String mensajeError = "Error al crear la categoría";
+        String mensajeError = "Error al crear la marca";
         CreacionMarcaException excepcion = new CreacionMarcaException(mensajeError);
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
                 .handleCreacionMarcaException(excepcion);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
+        assertEquals(mensajeError, response.getBody().message());
+    }
+
+    @Test
+    void testHandleListarMarcaException() {
+        String mensajeError = "Error al listar las marcas";
+        ListarMarcaException excepcion = new ListarMarcaException(mensajeError);
+
+        ResponseEntity<RespuestaError> response = manejadorExcepciones
+                .handleListarMarcaException(excepcion);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
