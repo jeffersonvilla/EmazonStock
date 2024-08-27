@@ -13,6 +13,8 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerale
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDEN_NO_VALIDO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.DESCRIPCION_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
 
 public class MarcaCasoUso implements IMarcaServicePort {
 
@@ -24,6 +26,9 @@ public class MarcaCasoUso implements IMarcaServicePort {
 
     @Override
     public Marca crearMarca(Marca marca) {
+        validarNombreNoNuloNiVacio(marca.getNombre());
+        validarDescripcionNoNuloNiVacio(marca.getDescripcion());
+
         if(persistencia.obtenerMarcaPorNombre(marca.getNombre()).isPresent()){
             throw new CreacionMarcaException(NOMBRE_NO_DISPONIBLE);
         }

@@ -12,6 +12,8 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
 
 public class CategoriaCasoUso implements ICategoriaServicePort {
 
@@ -23,6 +25,9 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {
+        validarNombreNoNuloNiVacio(categoria.getNombre());
+        validarDescripcionNoNuloNiVacio(categoria.getDescripcion());
+
         if(persistencia.obtenerCategoriaPorNombre(categoria.getNombre()).isPresent()){
             throw new CreacionCategoriaException(NOMBRE_NO_DISPONIBLE);
         }
