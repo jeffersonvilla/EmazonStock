@@ -1,13 +1,11 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescripcionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.DescriptionCategoriaNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.NombreCategoriaNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.DescripcionMarcaNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.NombreMarcaNoValidoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +27,12 @@ class ManejadorExcepcionesTest {
     private final ManejadorExcepciones manejadorExcepciones = new ManejadorExcepciones();
 
     @Test
-    void testHandleNombreCategoriaNoValidoException() {
+    void testHandleNombreNoValidoException() {
         String mensajeError = "El nombre no es válido";
-        NombreCategoriaNoValidoException excepcion = new NombreCategoriaNoValidoException(mensajeError);
+        NombreNoValidoException excepcion = new NombreNoValidoException(mensajeError);
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
-                .handleNombreCategoriaNoValidoException(excepcion);
+                .handleNombreNoValidoException(excepcion);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -44,12 +42,12 @@ class ManejadorExcepcionesTest {
     }
 
     @Test
-    void testHandleDescriptionCategoriaNoValidaException() {
+    void testHandleDescripcionNoValidaException() {
         String mensajeError = "La descripción no es válida";
-        DescriptionCategoriaNoValidaException excepcion = new DescriptionCategoriaNoValidaException(mensajeError);
+        DescripcionNoValidaException excepcion = new DescripcionNoValidaException(mensajeError);
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
-                .handleDescriptionCategoriaNoValidaException(excepcion);
+                .handleDescripcionNoValidaException(excepcion);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -80,36 +78,6 @@ class ManejadorExcepcionesTest {
 
         ResponseEntity<RespuestaError> response = manejadorExcepciones
                 .handleListarCategoriaException(excepcion);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
-        assertEquals(mensajeError, response.getBody().message());
-    }
-
-    @Test
-    void testHandleNombreMarcaNoValidoException() {
-        String mensajeError = "El nombre no es válido";
-        NombreMarcaNoValidoException excepcion = new NombreMarcaNoValidoException(mensajeError);
-
-        ResponseEntity<RespuestaError> response = manejadorExcepciones
-                .handleNombreMarcaNoValidoException(excepcion);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
-        assertEquals(mensajeError, response.getBody().message());
-    }
-
-    @Test
-    void testHandleDescriptionMarcaNoValidaException() {
-        String mensajeError = "La descripción no es válida";
-        DescripcionMarcaNoValidaException excepcion = new DescripcionMarcaNoValidaException(mensajeError);
-
-        ResponseEntity<RespuestaError> response = manejadorExcepciones
-                .handleDescripcionMarcaNoValidaException(excepcion);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());

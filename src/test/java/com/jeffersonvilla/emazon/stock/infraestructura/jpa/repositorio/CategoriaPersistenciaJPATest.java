@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -101,7 +101,7 @@ class CategoriaPersistenciaJPATest {
 
 
         List<Categoria> resultado = categoriaPersistenciaJPA
-                .listarCategoriasOrdenAscendentePorNombre(pagina, tamano);
+                .listarCategoriasPorNombre(pagina, tamano, ORDEN_ASCENDENTE);
 
 
         assertEquals(2, resultado.size());
@@ -135,7 +135,7 @@ class CategoriaPersistenciaJPATest {
 
 
         List<Categoria> resultado = categoriaPersistenciaJPA
-                .listarCategoriasOrdenDescendentePorNombre(pagina, tamano);
+                .listarCategoriasPorNombre(pagina, tamano, ORDEN_DESCENDENTE);
 
 
         assertEquals(2, resultado.size());

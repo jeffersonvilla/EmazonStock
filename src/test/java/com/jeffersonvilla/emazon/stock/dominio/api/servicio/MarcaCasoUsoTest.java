@@ -95,7 +95,7 @@ class MarcaCasoUsoTest {
                 new Marca(1L, "Marca A", "Marca de dispositivos electrónicos"),
                 new Marca(2L, "Marca B", "Marca de productos para el hogar")
         );
-        when(persistencia.listarMarcasOrdenAscendentePorNombre(0, 10))
+        when(persistencia.listarMarcasPorNombre(0, 10, ORDEN_ASCENDENTE))
                 .thenReturn(marcas);
 
         List<Marca> resultado = marcaCasoUso
@@ -103,7 +103,7 @@ class MarcaCasoUsoTest {
 
         assertEquals(marcas, resultado);
         verify(persistencia, times(1))
-                .listarMarcasOrdenAscendentePorNombre(0, 10);
+                .listarMarcasPorNombre(0, 10, ORDEN_ASCENDENTE);
     }
 
     @Test
@@ -112,7 +112,7 @@ class MarcaCasoUsoTest {
                 new Marca(1L, "Marca A", "Marca de dispositivos electrónicos"),
                 new Marca(2L, "Marca B", "Marca de productos para el hogar")
         );
-        when(persistencia.listarMarcasOrdenDescendentePorNombre(0, 10))
+        when(persistencia.listarMarcasPorNombre(0, 10, ORDEN_DESCENDENTE))
                 .thenReturn(marcas);
 
         List<Marca> resultado = marcaCasoUso
@@ -120,7 +120,7 @@ class MarcaCasoUsoTest {
 
         assertEquals(marcas, resultado);
         verify(persistencia, times(1))
-                .listarMarcasOrdenDescendentePorNombre(0, 10);
+                .listarMarcasPorNombre(0, 10, ORDEN_DESCENDENTE);
     }
 
     @Test
@@ -130,8 +130,7 @@ class MarcaCasoUsoTest {
         });
 
         assertEquals(PAGINA_VALOR_MINIMO, exception.getMessage());
-        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasPorNombre(anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -141,8 +140,7 @@ class MarcaCasoUsoTest {
         });
 
         assertEquals(TAMANO_VALOR_MINIMO, exception.getMessage());
-        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasPorNombre(anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -152,7 +150,6 @@ class MarcaCasoUsoTest {
         });
 
         assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
-        verify(persistencia, never()).listarMarcasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarMarcasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarMarcasPorNombre(anyInt(), anyInt(), anyString());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
@@ -38,16 +39,11 @@ public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
     }
 
     @Override
-    public List<Marca> listarMarcasOrdenAscendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by(SORT_NOMBRE).ascending();
+    public List<Marca> listarMarcasPorNombre(int pagina, int tamano, String orden) {
+        Sort sort = (orden.equals(ORDEN_ASCENDENTE))?
+                Sort.by(SORT_NOMBRE).ascending() : Sort.by(SORT_NOMBRE).descending();
         Pageable pageable = PageRequest.of(pagina, tamano, sort);
         return marcaRepository.findAll(pageable).map(mapper::marcaEntityToMarca).toList();
     }
 
-    @Override
-    public List<Marca> listarMarcasOrdenDescendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by(SORT_NOMBRE).descending();
-        Pageable pageable = PageRequest.of(pagina, tamano, sort);
-        return marcaRepository.findAll(pageable).map(mapper::marcaEntityToMarca).toList();
-    }
 }
