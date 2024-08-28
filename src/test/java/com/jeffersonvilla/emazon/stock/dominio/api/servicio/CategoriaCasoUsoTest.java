@@ -94,7 +94,7 @@ class CategoriaCasoUsoTest {
                 new Categoria(1L, "Electrónica", "Categoría de dispositivos electrónicos"),
                 new Categoria(2L, "Hogar", "Categoría de productos para el hogar")
         );
-        when(persistencia.listarCategoriasOrdenAscendentePorNombre(0, 10))
+        when(persistencia.listarCategoriasPorNombre(0, 10, ORDEN_ASCENDENTE))
                 .thenReturn(categorias);
 
         List<Categoria> resultado = categoriaCasoUso
@@ -102,7 +102,7 @@ class CategoriaCasoUsoTest {
 
         assertEquals(categorias, resultado);
         verify(persistencia, times(1))
-                .listarCategoriasOrdenAscendentePorNombre(0, 10);
+                .listarCategoriasPorNombre(0, 10, ORDEN_ASCENDENTE);
     }
 
     @Test
@@ -111,7 +111,7 @@ class CategoriaCasoUsoTest {
                 new Categoria(1L, "Electrónica", "Categoría de dispositivos electrónicos"),
                 new Categoria(2L, "Hogar", "Categoría de productos para el hogar")
         );
-        when(persistencia.listarCategoriasOrdenDescendentePorNombre(0, 10))
+        when(persistencia.listarCategoriasPorNombre(0, 10, ORDEN_DESCENDENTE))
                 .thenReturn(categorias);
 
         List<Categoria> resultado = categoriaCasoUso
@@ -119,7 +119,7 @@ class CategoriaCasoUsoTest {
 
         assertEquals(categorias, resultado);
         verify(persistencia, times(1))
-                .listarCategoriasOrdenDescendentePorNombre(0, 10);
+                .listarCategoriasPorNombre(0, 10, ORDEN_DESCENDENTE);
     }
 
     @Test
@@ -129,8 +129,7 @@ class CategoriaCasoUsoTest {
         });
 
         assertEquals(PAGINA_VALOR_MINIMO, exception.getMessage());
-        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasPorNombre(anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -140,8 +139,7 @@ class CategoriaCasoUsoTest {
         });
 
         assertEquals(TAMANO_VALOR_MINIMO, exception.getMessage());
-        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasPorNombre(anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -151,8 +149,7 @@ class CategoriaCasoUsoTest {
         });
 
         assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
-        verify(persistencia, never()).listarCategoriasOrdenAscendentePorNombre(anyInt(), anyInt());
-        verify(persistencia, never()).listarCategoriasOrdenDescendentePorNombre(anyInt(), anyInt());
+        verify(persistencia, never()).listarCategoriasPorNombre(anyInt(), anyInt(), anyString());
     }
 
 }

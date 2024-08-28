@@ -52,9 +52,6 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
             throw new ListarCategoriaException(ORDEN_NO_VALIDO);
         }
 
-        if(orden.equals(ORDEN_ASCENDENTE)){
-            return persistencia.listarCategoriasOrdenAscendentePorNombre(pagina, tamano);
-        }
-        return persistencia.listarCategoriasOrdenDescendentePorNombre(pagina, tamano);
+        return persistencia.listarCategoriasPorNombre(pagina, tamano, orden);
     }
 }

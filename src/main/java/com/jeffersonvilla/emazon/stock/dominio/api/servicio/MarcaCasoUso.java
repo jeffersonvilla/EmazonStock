@@ -53,9 +53,6 @@ public class MarcaCasoUso implements IMarcaServicePort {
             throw new ListarMarcaException(ORDEN_NO_VALIDO);
         }
 
-        if(orden.equals(ORDEN_ASCENDENTE)){
-            return persistencia.listarMarcasOrdenAscendentePorNombre(pagina, tamano);
-        }
-        return persistencia.listarMarcasOrdenDescendentePorNombre(pagina, tamano);
+        return persistencia.listarMarcasPorNombre(pagina, tamano, orden);
     }
 }

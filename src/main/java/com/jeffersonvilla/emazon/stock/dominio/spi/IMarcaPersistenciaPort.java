@@ -9,6 +9,5 @@ public interface IMarcaPersistenciaPort {
 
     public Marca crearMarca(Marca marca);
     public Optional<Marca> obtenerMarcaPorNombre(String nombre);
-    public List<Marca> listarMarcasOrdenAscendentePorNombre(int pagina, int tamano);
-    public List<Marca> listarMarcasOrdenDescendentePorNombre(int pagina, int tamano);
+    public List<Marca> listarMarcasPorNombre(int pagina, int tamano, String orden);
 }

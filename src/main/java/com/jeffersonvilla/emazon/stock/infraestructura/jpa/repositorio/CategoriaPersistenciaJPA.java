@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Optional;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 @RequiredArgsConstructor
@@ -35,15 +36,9 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
     }
 
     @Override
-    public List<Categoria> listarCategoriasOrdenAscendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by(SORT_NOMBRE).ascending();
-        Pageable pageable = PageRequest.of(pagina, tamano, sort);
-        return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
-    }
-
-    @Override
-    public List<Categoria> listarCategoriasOrdenDescendentePorNombre(int pagina, int tamano) {
-        Sort sort =  Sort.by(SORT_NOMBRE).descending();
+    public List<Categoria> listarCategoriasPorNombre(int pagina, int tamano, String orden) {
+        Sort sort =  (orden.equals(ORDEN_ASCENDENTE)) ?
+                Sort.by(SORT_NOMBRE).ascending() : Sort.by(SORT_NOMBRE).descending();
         Pageable pageable = PageRequest.of(pagina, tamano, sort);
         return categoriaRepository.findAll(pageable).map(mapper::categoriaEntityToCategoria).toList();
     }

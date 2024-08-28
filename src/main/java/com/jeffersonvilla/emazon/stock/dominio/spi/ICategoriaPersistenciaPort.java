@@ -9,6 +9,5 @@ public interface ICategoriaPersistenciaPort {
 
     public Categoria crearCategoria(Categoria categoria);
     public Optional<Categoria> obtenerCategoriaPorNombre(String nombre);
-    public List<Categoria> listarCategoriasOrdenAscendentePorNombre(int pagina, int tamano);
-    public List<Categoria> listarCategoriasOrdenDescendentePorNombre(int pagina, int tamano);
+    public List<Categoria> listarCategoriasPorNombre(int pagina, int tamano, String orden);
 }
