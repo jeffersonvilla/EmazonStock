@@ -12,4 +12,10 @@ public class MensajesErrorMarca {
 
     public static final String DESCRIPCION_TAMANO_MAXIMO = "La descripción debe tener máximo "+
             TAMANO_MAXIMO_DESCRIPCION_MARCA +" caracteres";
+
+    public static final String MARCA_POR_ID_NO_EXISTE = "La marca que busca por id no existe";
+
+    public static final String MARCA_NULO = "El articulo debe tener una marca";
+
+    public static final String ID_NULO_MARCA = "El ID de la marca no puede ser nulo";
 }

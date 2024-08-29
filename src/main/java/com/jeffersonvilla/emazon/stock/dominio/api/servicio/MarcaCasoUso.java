@@ -1,18 +1,20 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.IMarcaServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.IdNuloException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IMarcaPersistenciaPort;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDEN_NO_VALIDO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.NOMBRE_TAMANO_MAXIMO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.DESCRIPCION_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
 
@@ -54,5 +56,19 @@ public class MarcaCasoUso implements IMarcaServicePort {
         }
 
         return persistencia.listarMarcasPorNombre(pagina, tamano, orden);
+    }
+
+    @Override
+    public Marca obtenerMarcaPorId(Long id) {
+        if(id == null){
+            throw new IdNuloException(ID_NULO_MARCA);
+        }
+
+        Optional<Marca> marca = persistencia.obtenerMarcaPorId(id);
+        if(!marca.isPresent()){
+            throw new MarcaNoExisteException(MARCA_POR_ID_NO_EXISTE);
+        }
+
+        return marca.get();
     }
 }

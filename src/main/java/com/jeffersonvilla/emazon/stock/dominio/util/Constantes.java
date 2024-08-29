@@ -18,5 +18,14 @@ public class Constantes {
     public static final int TAMANO_MAXIMO_NOMBRE_MARCA = 50;
     public static final int TAMANO_MAXIMO_DESCRIPCION_MARCA = 120;
 
+    public static final int TAMANO_MAXIMO_NOMBRE_ARTICULO = 50;
+    public static final int TAMANO_MAXIMO_DESCRIPCION_ARTICULO = 120;
+
+    public static final int CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO = 1;
+    public static final int CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO = 3;
+
+    public static final int CANTIDAD_STOCK_MINIMA = 0;
+    public static final int PRECIO_MINIMO = 0;
+
     public static final String SORT_NOMBRE = "nombre";
 }

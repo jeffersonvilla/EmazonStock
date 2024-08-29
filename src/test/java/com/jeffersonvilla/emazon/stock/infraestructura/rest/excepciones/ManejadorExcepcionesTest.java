@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescripcionNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.DescripcionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.NombreNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;

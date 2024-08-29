@@ -39,6 +39,12 @@ public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
     }
 
     @Override
+    public Optional<Marca> obtenerMarcaPorId(Long id) {
+        return marcaRepository.findById(id)
+                .map(mapper::marcaEntityToMarca);
+    }
+
+    @Override
     public List<Marca> listarMarcasPorNombre(int pagina, int tamano, String orden) {
         Sort sort = (orden.equals(ORDEN_ASCENDENTE))?
                 Sort.by(SORT_NOMBRE).ascending() : Sort.by(SORT_NOMBRE).descending();
