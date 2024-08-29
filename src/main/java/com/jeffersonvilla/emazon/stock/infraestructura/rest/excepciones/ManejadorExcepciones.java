@@ -10,7 +10,6 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaExce
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -82,8 +81,10 @@ public class ManejadorExcepciones {
     public ResponseEntity<RespuestaError> handleCategoriaNoExisteException(
             CategoriaNoExisteException ex){
 
-        return ResponseEntity.badRequest().body(
-                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+        return new ResponseEntity<>(
+                new RespuestaError(HttpStatus.NOT_FOUND.toString(), ex.getMessage()),
+                HttpStatus.NOT_FOUND
+        );
     }
 
     @ExceptionHandler(CreacionMarcaException.class)
@@ -106,21 +107,15 @@ public class ManejadorExcepciones {
     public ResponseEntity<RespuestaError> handleMarcaNoExisteException(
             MarcaNoExisteException ex){
 
-        return ResponseEntity.badRequest().body(
-                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+        return new ResponseEntity<>(
+                new RespuestaError(HttpStatus.NOT_FOUND.toString(), ex.getMessage()),
+                HttpStatus.NOT_FOUND
+        );
     }
 
     @ExceptionHandler(CreacionArticuloException.class)
     public ResponseEntity<RespuestaError> handleCreacionArticuloException(
             CreacionArticuloException ex){
-
-        return ResponseEntity.badRequest().body(
-                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<RespuestaError> handleHttpMessageNotReadableException(
-            HttpMessageNotReadableException ex) {
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
