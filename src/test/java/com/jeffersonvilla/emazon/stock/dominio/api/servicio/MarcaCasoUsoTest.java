@@ -1,5 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.IdNuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
@@ -16,6 +18,8 @@ import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.MARCA_POR_ID_NO_EXISTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.ID_NULO_MARCA;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.DESCRIPCION_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
@@ -151,5 +155,43 @@ class MarcaCasoUsoTest {
 
         assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
         verify(persistencia, never()).listarMarcasPorNombre(anyInt(), anyInt(), anyString());
+    }
+    
+    @Test
+    void obtenerMarcaPorIdConIdNuloDebeLanzarIdNuloException() {
+        Long id = null;
+
+        IdNuloException exception = assertThrows(IdNuloException.class, () -> {
+            marcaCasoUso.obtenerMarcaPorId(id);
+        });
+
+        assertEquals(ID_NULO_MARCA, exception.getMessage());
+        verify(persistencia, never()).obtenerMarcaPorId(anyLong());
+    }
+
+    @Test
+    void obtenerMarcaPorIdCuandoMarcaNoExisteDebeLanzarMarcaNoExisteException() {
+        Long id = 1L;
+        when(persistencia.obtenerMarcaPorId(id)).thenReturn(Optional.empty());
+
+        MarcaNoExisteException exception = assertThrows(MarcaNoExisteException.class, () -> {
+            marcaCasoUso.obtenerMarcaPorId(id);
+        });
+
+        assertEquals(MARCA_POR_ID_NO_EXISTE, exception.getMessage());
+        verify(persistencia, times(1)).obtenerMarcaPorId(id);
+    }
+
+    @Test
+    void obtenerMarcaPorIdCuandoMarcaExisteDebeRetornarMarca() {
+        Long id = 1L;
+        Marca marcaEsperada = mock(Marca.class);
+        when(persistencia.obtenerMarcaPorId(id)).thenReturn(Optional.of(marcaEsperada));
+
+        Marca marcaResultado = marcaCasoUso.obtenerMarcaPorId(id);
+
+        assertNotNull(marcaResultado);
+        assertEquals(marcaEsperada, marcaResultado);
+        verify(persistencia, times(1)).obtenerMarcaPorId(id);
     }
 }

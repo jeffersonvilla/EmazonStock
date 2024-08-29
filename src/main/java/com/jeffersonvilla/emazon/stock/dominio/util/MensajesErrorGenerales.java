@@ -17,6 +17,10 @@ public class MensajesErrorGenerales {
 
     public static final String DESCRIPCION_NULL = "Debe tener una descripción";
 
+    public static final String CANTIDAD_NULL = "Debe tener una cantidad";
+
+    public static final String PRECIO_NULL = "Debe tener un precio";
+
     public static final String ORDEN_NO_VALIDO = "Ordenes disponibles son: '"
             + ORDEN_ASCENDENTE +"' y '"+ ORDEN_DESCENDENTE +"'";
 

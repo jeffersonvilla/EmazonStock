@@ -36,6 +36,12 @@ public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
     }
 
     @Override
+    public Optional<Categoria> obtenerCategoriaPorId(Long id) {
+        return categoriaRepository.findById(id)
+                .map(mapper::categoriaEntityToCategoria);
+    }
+
+    @Override
     public List<Categoria> listarCategoriasPorNombre(int pagina, int tamano, String orden) {
         Sort sort =  (orden.equals(ORDEN_ASCENDENTE)) ?
                 Sort.by(SORT_NOMBRE).ascending() : Sort.by(SORT_NOMBRE).descending();

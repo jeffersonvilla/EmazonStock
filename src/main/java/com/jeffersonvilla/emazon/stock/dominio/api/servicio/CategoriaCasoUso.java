@@ -1,16 +1,18 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CategoriaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.IdNuloException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.DESCRIPCION_TAMANO_MAXIMO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.NOMBRE_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorCategoria.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
@@ -53,5 +55,19 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
         }
 
         return persistencia.listarCategoriasPorNombre(pagina, tamano, orden);
+    }
+
+    @Override
+    public Categoria obtenerCategoriaPorId(Long id) {
+        if(id == null){
+            throw new IdNuloException(ID_NULO_CATEGORIA);
+        }
+
+        Optional<Categoria> categoria = persistencia.obtenerCategoriaPorId(id);
+        if(!categoria.isPresent()){
+            throw new CategoriaNoExisteException(CATEGORIA_POR_ID_NO_EXISTE + " id: " + id);
+        }
+
+        return categoria.get();
     }
 }

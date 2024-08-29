@@ -1,7 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.DescripcionNoValidaException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.DescripcionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.NombreNoValidoException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

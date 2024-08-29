@@ -149,4 +149,31 @@ class CategoriaPersistenciaJPATest {
         verify(mapper, times(1)).categoriaEntityToCategoria(categoriaEntity2);
     }
 
+    @Test
+    void testObtenerCategoriaPorIdCuandoExiste() {
+        CategoriaEntity categoriaEntity = mock(CategoriaEntity.class);
+        Categoria categoria = mock(Categoria.class);
+
+        when(categoriaRepository.findById(1L)).thenReturn(Optional.of(categoriaEntity));
+        when(mapper.categoriaEntityToCategoria(categoriaEntity)).thenReturn(categoria);
+
+        Optional<Categoria> resultado = categoriaPersistenciaJPA.obtenerCategoriaPorId(1L);
+
+        assertTrue(resultado.isPresent());
+        assertEquals(categoria, resultado.get());
+        verify(categoriaRepository, times(1)).findById(1L);
+        verify(mapper, times(1)).categoriaEntityToCategoria(categoriaEntity);
+    }
+
+    @Test
+    void testObtenerCategoriaPorIdCuandoNoExiste() {
+        when(categoriaRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<Categoria> resultado = categoriaPersistenciaJPA.obtenerCategoriaPorId(1L);
+
+        assertFalse(resultado.isPresent());
+        verify(categoriaRepository, times(1)).findById(1L);
+        verify(mapper, never()).categoriaEntityToCategoria(any());
+    }
+
 }

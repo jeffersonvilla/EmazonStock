@@ -149,4 +149,31 @@ class MarcaPersistenciaJPATest {
         verify(mapper, times(1)).marcaEntityToMarca(marcaEntity1);
         verify(mapper, times(1)).marcaEntityToMarca(marcaEntity2);
     }
+    
+    @Test
+    void testObtenerMarcaPorIdCuandoExiste() {
+        MarcaEntity marcaEntity = mock(MarcaEntity.class);
+        Marca marca = mock(Marca.class);
+
+        when(marcaRepository.findById(1L)).thenReturn(Optional.of(marcaEntity));
+        when(mapper.marcaEntityToMarca(marcaEntity)).thenReturn(marca);
+
+        Optional<Marca> resultado = marcaPersistenciaJPA.obtenerMarcaPorId(1L);
+
+        assertTrue(resultado.isPresent());
+        assertEquals(marca, resultado.get());
+        verify(marcaRepository, times(1)).findById(1L);
+        verify(mapper, times(1)).marcaEntityToMarca(marcaEntity);
+    }
+
+    @Test
+    void testObtenerMarcaPorIdCuandoNoExiste() {
+        when(marcaRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<Marca> resultado = marcaPersistenciaJPA.obtenerMarcaPorId(1L);
+
+        assertFalse(resultado.isPresent());
+        verify(marcaRepository, times(1)).findById(1L);
+        verify(mapper, never()).marcaEntityToMarca(any());
+    }
 }

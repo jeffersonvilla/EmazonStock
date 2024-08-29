@@ -9,4 +9,6 @@ public interface IMarcaServicePort {
     public Marca crearMarca(Marca marca);
 
     public List<Marca> listarMarca(int pagina, int tamano, String orden);
+
+    public Marca obtenerMarcaPorId(Long id);
 }

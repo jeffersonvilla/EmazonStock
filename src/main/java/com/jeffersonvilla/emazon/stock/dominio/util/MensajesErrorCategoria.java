@@ -11,4 +11,8 @@ public class MensajesErrorCategoria {
 
     public static final String DESCRIPCION_TAMANO_MAXIMO = "La descripción debe tener máximo "+
             TAMANO_MAXIMO_DESCRIPCION_CATEGORIA +" caracteres";
+
+    public static final String CATEGORIA_POR_ID_NO_EXISTE = "La categoría que busca por id no existe";
+
+    public static final String ID_NULO_CATEGORIA = "El ID de la categoría no puede ser nulo";
 }
