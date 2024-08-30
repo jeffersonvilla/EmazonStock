@@ -1,6 +1,7 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.CreacionArticuloException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CategoriaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.*;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
@@ -205,6 +206,36 @@ class ManejadorExcepcionesTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
+        assertEquals(mensajeError, response.getBody().message());
+    }
+
+    @Test
+    void testHandleListarArticuloException() {
+        String mensajeError = "Error al listar los articulos";
+        ListarArticuloException excepcion = new ListarArticuloException(mensajeError);
+
+        ResponseEntity<RespuestaError> response = manejadorExcepciones
+                .handleListarArticuloException(excepcion);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST.toString(), response.getBody().status());
+        assertEquals(mensajeError, response.getBody().message());
+    }
+
+    @Test
+    void testHandleIllegalStateException() {
+        String mensajeError = "Error interno";
+        IllegalStateException excepcion = new IllegalStateException(mensajeError);
+
+        ResponseEntity<RespuestaError> response = manejadorExcepciones
+                .handleIllegalStateException(excepcion);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.toString(), response.getBody().status());
         assertEquals(mensajeError, response.getBody().message());
     }
 

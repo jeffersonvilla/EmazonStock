@@ -153,7 +153,7 @@ class MarcaCasoUsoTest {
             marcaCasoUso.listarMarca(0, 10, "INVALIDO");
         });
 
-        assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
+        assertEquals(ORDENES_VALIDOS, exception.getMessage());
         verify(persistencia, never()).listarMarcasPorNombre(anyInt(), anyInt(), anyString());
     }
     

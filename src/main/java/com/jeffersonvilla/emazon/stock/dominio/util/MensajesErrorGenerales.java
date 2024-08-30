@@ -1,7 +1,6 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 
 public class MensajesErrorGenerales {
 
@@ -21,10 +20,13 @@ public class MensajesErrorGenerales {
 
     public static final String PRECIO_NULL = "Debe tener un precio";
 
-    public static final String ORDEN_NO_VALIDO = "Ordenes disponibles son: '"
+    public static final String ORDENES_VALIDOS = "Ordenes disponibles son: '"
             + ORDEN_ASCENDENTE +"' y '"+ ORDEN_DESCENDENTE +"'";
 
     public static final String PAGINA_VALOR_MINIMO = "La pagina debe ser mayor o igual a cero.";
 
     public static final String TAMANO_VALOR_MINIMO = "El tamaño de la pagina debe ser mayor o igual a uno.";
+
+    public static final String ATRIBUTOS_PARA_LISTAR = "Los atributos para listar disponibles son: '"
+            + LISTAR_POR_ARTICULO + "', '" + LISTAR_POR_MARCA +"' y '" + LISTAR_POR_CATEGORIA + "'";
 }

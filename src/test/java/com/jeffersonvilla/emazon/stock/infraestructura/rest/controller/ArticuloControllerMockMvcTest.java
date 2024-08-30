@@ -9,9 +9,7 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteEx
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.*;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.ArticuloMapperRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +21,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ArticuloController.class)
 class ArticuloControllerMockMvcTest {
@@ -131,5 +134,59 @@ class ArticuloControllerMockMvcTest {
                         .content(objectMapper.writeValueAsString(crearArticuloRequestDto)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Categoría no existe"));
+    }
+
+    @Test
+    void testListarArticulos() throws Exception {
+        Marca marca1 = mock(Marca.class);
+        Marca marca2 = mock(Marca.class);
+        ListarArticuloReponseCategoriaDto categoria1 = mock(ListarArticuloReponseCategoriaDto.class);
+        ListarArticuloReponseCategoriaDto categoria2 = mock(ListarArticuloReponseCategoriaDto.class);
+
+        ListarArticuloResponseDto articuloDto1 = new ListarArticuloResponseDto(
+                1L, "A1", "D1", 10, BigDecimal.valueOf(1000),
+                marca1, Set.of(categoria1));
+        ListarArticuloResponseDto articuloDto2 = new ListarArticuloResponseDto(
+                2L, "A2", "D2", 20, BigDecimal.valueOf(2000),
+                marca2, Set.of(categoria2));
+
+        List<Articulo> articulos = Arrays.asList(mock(Articulo.class), mock(Articulo.class));
+
+        when(articuloApi.listarArticulo(0, 10, ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO))
+                .thenReturn(articulos);
+        when(mapper.articuloToListarArticuloResponseDto(articulos.get(0)))
+                .thenReturn(articuloDto1);
+        when(mapper.articuloToListarArticuloResponseDto(articulos.get(1)))
+                .thenReturn(articuloDto2);
+
+        mockMvc.perform(get("/articulo/listar")
+                        .param("pagina", "0")
+                        .param("tamano", "10")
+                        .param("orden", ORDEN_ASCENDENTE)
+                        .param("listarPor", LISTAR_POR_ARTICULO)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].id").value(articuloDto1.id()))
+                .andExpect(jsonPath("$[0].nombre").value(articuloDto1.nombre()))
+                .andExpect(jsonPath("$[0].descripcion").value(articuloDto1.descripcion()))
+                .andExpect(jsonPath("$[0].cantidad").value(articuloDto1.cantidad()))
+                .andExpect(jsonPath("$[0].precio").value(articuloDto1.precio()))
+                .andExpect(jsonPath("$[0].marca.id").value(articuloDto1.marca().getId()))
+                .andExpect(jsonPath("$[0].marca.nombre").value(articuloDto1.marca().getNombre()))
+                .andExpect(jsonPath("$[0].marca.descripcion").value(articuloDto1.marca().getDescripcion()))
+                .andExpect(jsonPath("$[0].categorias[0].id").value(categoria1.id()))
+                .andExpect(jsonPath("$[0].categorias[0].nombre").value(categoria1.nombre()))
+                .andExpect(jsonPath("$[1].id").value(articuloDto2.id()))
+                .andExpect(jsonPath("$[1].nombre").value(articuloDto2.nombre()))
+                .andExpect(jsonPath("$[1].descripcion").value(articuloDto2.descripcion()))
+                .andExpect(jsonPath("$[1].cantidad").value(articuloDto2.cantidad()))
+                .andExpect(jsonPath("$[1].precio").value(articuloDto2.precio()))
+                .andExpect(jsonPath("$[1].marca.id").value(articuloDto2.marca().getId()))
+                .andExpect(jsonPath("$[1].marca.nombre").value(articuloDto2.marca().getNombre()))
+                .andExpect(jsonPath("$[1].marca.descripcion").value(articuloDto2.marca().getDescripcion()))
+                .andExpect(jsonPath("$[1].categorias[0].id").value(categoria2.id()))
+                .andExpect(jsonPath("$[1].categorias[0].nombre").value(categoria2.nombre()));
+
     }
 }

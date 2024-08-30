@@ -51,7 +51,7 @@ public class CategoriaCasoUso implements ICategoriaServicePort {
             throw new ListarCategoriaException(TAMANO_VALOR_MINIMO);
         }
         if(!(orden.equals(ORDEN_ASCENDENTE) || orden.equals(ORDEN_DESCENDENTE))){
-            throw new ListarCategoriaException(ORDEN_NO_VALIDO);
+            throw new ListarCategoriaException(ORDENES_VALIDOS);
         }
 
         return persistencia.listarCategoriasPorNombre(pagina, tamano, orden);
