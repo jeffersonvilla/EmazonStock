@@ -7,7 +7,7 @@ public class Constantes {
     }
 
     public static final String ORDEN_ASCENDENTE = "ASC";
-    public static final String ORDEN_DESCENDENTE = "DES";
+    public static final String ORDEN_DESCENDENTE = "DESC";
 
     public static final int PAGINA_MINIMO = 0;
     public static final int TAMANO_MINIMO = 1;
@@ -28,4 +28,9 @@ public class Constantes {
     public static final int PRECIO_MINIMO = 0;
 
     public static final String SORT_NOMBRE = "nombre";
+
+    public static final String LISTAR_POR_ARTICULO = "articulo";
+    public static final String LISTAR_POR_MARCA = "marca";
+    public static final String LISTAR_POR_CATEGORIA = "categorias";
+
 }

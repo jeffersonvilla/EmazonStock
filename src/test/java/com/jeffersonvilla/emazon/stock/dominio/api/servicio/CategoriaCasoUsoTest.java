@@ -149,7 +149,7 @@ class CategoriaCasoUsoTest {
             categoriaCasoUso.listarCategoria(0, 10, "INVALIDO");
         });
 
-        assertEquals(ORDEN_NO_VALIDO, exception.getMessage());
+        assertEquals(ORDENES_VALIDOS, exception.getMessage());
         verify(persistencia, never()).listarCategoriasPorNombre(anyInt(), anyInt(), anyString());
     }
 

@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NO_DISPONIBLE;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDEN_NO_VALIDO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -150,7 +150,7 @@ class MarcaControllerTest {
         String orden = "invalid";
 
         when(marcaApi.listarMarca(pagina, tamano, orden))
-                .thenThrow(new ListarMarcaException(ORDEN_NO_VALIDO));
+                .thenThrow(new ListarMarcaException(ORDENES_VALIDOS));
 
         assertThrows(ListarMarcaException.class, () -> {
             marcaController.listarMarcas(pagina, tamano, orden);

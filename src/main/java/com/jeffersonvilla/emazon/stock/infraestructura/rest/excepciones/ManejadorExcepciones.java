@@ -1,6 +1,7 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.CreacionArticuloException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CategoriaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.*;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
@@ -116,6 +117,22 @@ public class ManejadorExcepciones {
     @ExceptionHandler(CreacionArticuloException.class)
     public ResponseEntity<RespuestaError> handleCreacionArticuloException(
             CreacionArticuloException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ListarArticuloException.class)
+    public ResponseEntity<RespuestaError> handleListarArticuloException(
+            ListarArticuloException ex){
+
+        return ResponseEntity.badRequest().body(
+                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<RespuestaError> handleIllegalStateException(
+            IllegalStateException ex){
 
         return ResponseEntity.badRequest().body(
                 new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));

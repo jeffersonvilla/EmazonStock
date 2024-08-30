@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDEN_NO_VALIDO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
@@ -52,7 +52,7 @@ public class MarcaCasoUso implements IMarcaServicePort {
             throw new ListarMarcaException(TAMANO_VALOR_MINIMO);
         }
         if(!(orden.equals(ORDEN_ASCENDENTE) || orden.equals(ORDEN_DESCENDENTE))){
-            throw new ListarMarcaException(ORDEN_NO_VALIDO);
+            throw new ListarMarcaException(ORDENES_VALIDOS);
         }
 
         return persistencia.listarMarcasPorNombre(pagina, tamano, orden);
