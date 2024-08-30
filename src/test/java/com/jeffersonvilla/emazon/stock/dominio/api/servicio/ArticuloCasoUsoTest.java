@@ -1,6 +1,7 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.CreacionArticuloException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.CantidadNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.DescripcionNoValidaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.NombreNoValidoException;
@@ -16,8 +17,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.MARCA_NULO;
@@ -168,5 +172,62 @@ class ArticuloCasoUsoTest {
 
         assertEquals(PRECIO_NEGATIVO, exception.getMessage());
         verify(persistencia, never()).crearArticulo(articulo);
+    }
+
+    @Test
+    void testListarArticuloConParametrosValidos() {
+        List<Articulo> articulos = Arrays.asList(
+                mock(Articulo.class),
+                mock(Articulo.class)
+        );
+        when(persistencia.listarArticulos(0, 10,
+                ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO)).thenReturn(articulos);
+
+        List<Articulo> resultado = articuloCasoUso
+                .listarArticulo(0, 10, ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO);
+
+        assertEquals(articulos, resultado);
+        verify(persistencia, times(1))
+                .listarArticulos(0, 10, ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO);
+    }
+
+    @Test
+    void testListarArticuloPaginaMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarArticuloException.class, () -> {
+            articuloCasoUso.listarArticulo(-1, 10, ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO);
+        });
+
+        assertEquals(PAGINA_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarArticulos(anyInt(), anyInt(), anyString(), anyString());
+    }
+
+    @Test
+    void testListarArticuloTamanoMenorQueMinimoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarArticuloException.class, () -> {
+            articuloCasoUso.listarArticulo(0, 0, ORDEN_ASCENDENTE, LISTAR_POR_ARTICULO);
+        });
+
+        assertEquals(TAMANO_VALOR_MINIMO, exception.getMessage());
+        verify(persistencia, never()).listarArticulos(anyInt(), anyInt(), anyString(), anyString());
+    }
+
+    @Test
+    void testListarArticuloConOrdenNoValidoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarArticuloException.class, () -> {
+            articuloCasoUso.listarArticulo(0, 10, "INVALIDO", LISTAR_POR_ARTICULO);
+        });
+
+        assertEquals(ORDENES_VALIDOS, exception.getMessage());
+        verify(persistencia, never()).listarArticulos(anyInt(), anyInt(), anyString(), anyString());
+    }
+
+    @Test
+    void testListarArticuloConAtributoParaListarNoValidoLanzaExcepcion() {
+        Exception exception = assertThrows(ListarArticuloException.class, () -> {
+            articuloCasoUso.listarArticulo(0, 10, ORDEN_ASCENDENTE, "INVALIDO");
+        });
+
+        assertEquals(ATRIBUTOS_PARA_LISTAR, exception.getMessage());
+        verify(persistencia, never()).listarArticulos(anyInt(), anyInt(), anyString(), anyString());
     }
 }

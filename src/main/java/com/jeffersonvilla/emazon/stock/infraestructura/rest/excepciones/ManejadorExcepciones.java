@@ -134,8 +134,10 @@ public class ManejadorExcepciones {
     public ResponseEntity<RespuestaError> handleIllegalStateException(
             IllegalStateException ex){
 
-        return ResponseEntity.badRequest().body(
-                new RespuestaError(HttpStatus.BAD_REQUEST.toString(), ex.getMessage()));
+        return new ResponseEntity<>(
+                new RespuestaError(HttpStatus.INTERNAL_SERVER_ERROR.toString(), ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

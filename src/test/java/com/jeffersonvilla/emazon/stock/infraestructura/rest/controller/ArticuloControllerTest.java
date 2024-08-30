@@ -3,14 +3,13 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.controller;
 import com.jeffersonvilla.emazon.stock.dominio.api.IArticuloServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.IMarcaServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CategoriaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.*;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.ArticuloMapperRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,8 +20,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -133,4 +138,84 @@ class ArticuloControllerTest {
         verify(articuloApi, never()).crearArticulo(any());
         verify(mapper, never()).articuloToCrearArticuloResponseDto(any());
     }
+
+    @Test
+    void testListarArticulosExito() {
+        int pagina = 0;
+        int tamano = 10;
+        String orden = ORDEN_ASCENDENTE;
+        String listarPor = LISTAR_POR_ARTICULO;
+
+        Articulo articulo1 = mock(Articulo.class);
+        Articulo articulo2 = mock(Articulo.class);
+        List<Articulo> articulos = Arrays.asList(articulo1, articulo2);
+
+        ListarArticuloReponseCategoriaDto categoriaDto = new ListarArticuloReponseCategoriaDto(1L, "C1");
+
+        ListarArticuloResponseDto responseDto1 = new ListarArticuloResponseDto(
+                1L, "A1", "D1", 10, BigDecimal.valueOf(1000),
+                mock(Marca.class), Set.of(categoriaDto));
+        ListarArticuloResponseDto responseDto2 = new ListarArticuloResponseDto(
+                2L, "A2", "D2", 20, BigDecimal.valueOf(2000),
+                mock(Marca.class), Set.of(categoriaDto));
+        List<ListarArticuloResponseDto> responseDtos = Arrays.asList(responseDto1, responseDto2);
+
+        when(articuloApi.listarArticulo(pagina, tamano, orden, listarPor)).thenReturn(articulos);
+        when(mapper.articuloToListarArticuloResponseDto(articulo1)).thenReturn(responseDto1);
+        when(mapper.articuloToListarArticuloResponseDto(articulo2)).thenReturn(responseDto2);
+
+        ResponseEntity<List<ListarArticuloResponseDto>> resultado =
+                articuloController.listarArticulos(pagina, tamano, orden, listarPor);
+
+        assertNotNull(resultado);
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertEquals(responseDtos, resultado.getBody());
+        verify(articuloApi, times(1))
+                .listarArticulo(pagina, tamano, orden, listarPor);
+        verify(mapper, times(1))
+                .articuloToListarArticuloResponseDto(articulo1);
+        verify(mapper, times(1))
+                .articuloToListarArticuloResponseDto(articulo2);
+    }
+
+    @Test
+    void testListarArticulosSinResultados() {
+        int pagina = 0;
+        int tamano = 10;
+        String orden = ORDEN_ASCENDENTE;
+        String listarPor = LISTAR_POR_ARTICULO;
+
+        when(articuloApi.listarArticulo(pagina, tamano, orden, listarPor))
+                .thenReturn(Collections.emptyList());
+
+        ResponseEntity<List<ListarArticuloResponseDto>> resultado =
+                articuloController.listarArticulos(pagina, tamano, orden, listarPor);
+
+        assertNotNull(resultado);
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertTrue(resultado.getBody().isEmpty());
+        verify(articuloApi, times(1))
+                .listarArticulo(pagina, tamano, orden, listarPor);
+        verify(mapper, never()).articuloToListarArticuloResponseDto(any(Articulo.class));
+    }
+
+    @Test
+    void testListarArticulosBadRequest() {
+        int pagina = 0;
+        int tamano = 10;
+        String orden = "invalido";
+        String listarPor = "invalido";
+
+        when(articuloApi.listarArticulo(pagina, tamano, orden, listarPor))
+                .thenThrow(new ListarArticuloException(ORDENES_VALIDOS));
+
+        assertThrows(ListarArticuloException.class, () -> {
+            articuloController.listarArticulos(pagina, tamano, orden, listarPor);
+        });
+
+        verify(articuloApi, times(1))
+                .listarArticulo(pagina, tamano, orden, listarPor);
+        verify(mapper, never()).articuloToListarArticuloResponseDto(any(Articulo.class));
+    }
+
 }
