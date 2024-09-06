@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IArticuloPersistenciaPort {
 
-    public Articulo crearArticulo(Articulo articulo);
-    public List<Articulo> listarArticulos(int pagina, int tamano, String orden, String listarPor);
+    Articulo crearArticulo(Articulo articulo);
+    List<Articulo> listarArticulos(int pagina, int tamano, String orden, String listarPor);
 
 }

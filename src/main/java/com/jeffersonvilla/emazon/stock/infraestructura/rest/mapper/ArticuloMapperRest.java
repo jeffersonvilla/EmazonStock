@@ -13,7 +13,7 @@ public interface ArticuloMapperRest {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "marca", ignore = true)
     @Mapping(target = "categorias", ignore = true)
-    public Articulo crearArticuloRequestDtoToArticulo(CrearArticuloRequestDto dto);
-    public CrearArticuloResponseDto articuloToCrearArticuloResponseDto(Articulo articulo);
-    public ListarArticuloResponseDto articuloToListarArticuloResponseDto(Articulo articulo);
+    Articulo crearArticuloRequestDtoToArticulo(CrearArticuloRequestDto dto);
+    CrearArticuloResponseDto articuloToCrearArticuloResponseDto(Articulo articulo);
+    ListarArticuloResponseDto articuloToListarArticuloResponseDto(Articulo articulo);
 }

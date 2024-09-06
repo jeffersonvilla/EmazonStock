@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CategoriaMapperJPA {
 
-    public CategoriaEntity categoriaToCategoriaEntity(Categoria categoria);
-    public Categoria categoriaEntityToCategoria(CategoriaEntity entity);
+    CategoriaEntity categoriaToCategoriaEntity(Categoria categoria);
+    Categoria categoriaEntityToCategoria(CategoriaEntity entity);
 }

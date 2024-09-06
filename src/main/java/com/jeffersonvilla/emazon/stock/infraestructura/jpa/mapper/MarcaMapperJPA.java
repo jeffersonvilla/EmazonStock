@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MarcaMapperJPA {
 
-    public MarcaEntity marcaToMarcaEntity(Marca marca);
-    public Marca marcaEntityToMarca(MarcaEntity entity);
+    MarcaEntity marcaToMarcaEntity(Marca marca);
+    Marca marcaEntityToMarca(MarcaEntity entity);
 }

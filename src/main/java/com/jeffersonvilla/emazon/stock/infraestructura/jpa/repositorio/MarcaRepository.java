@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface MarcaRepository extends JpaRepository<MarcaEntity, Long> {
 
-    public Optional<MarcaEntity> findByNombre(String nombre);
+    Optional<MarcaEntity> findByNombre(String nombre);
 }

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IMarcaServicePort {
 
-    public Marca crearMarca(Marca marca);
+    Marca crearMarca(Marca marca);
 
-    public List<Marca> listarMarca(int pagina, int tamano, String orden);
+    List<Marca> listarMarca(int pagina, int tamano, String orden);
 
-    public Marca obtenerMarcaPorId(Long id);
+    Marca obtenerMarcaPorId(Long id);
 }

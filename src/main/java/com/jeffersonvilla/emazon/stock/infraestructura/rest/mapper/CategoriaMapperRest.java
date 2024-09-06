@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 public interface CategoriaMapperRest {
 
     @Mapping(target = "id", ignore = true)
-    public Categoria crearCategoriaRequestDtoToCategoria(CrearCategoriaRequestDto dto);
-    public CrearCategoriaResponseDto categoriaToCrearCategoriaResponseDto(Categoria categoria);
-    public ListarCategoriaResponseDto categoriaToListarCategoriaResponseDto(Categoria categoria);
+    Categoria crearCategoriaRequestDtoToCategoria(CrearCategoriaRequestDto dto);
+    CrearCategoriaResponseDto categoriaToCrearCategoriaResponseDto(Categoria categoria);
+    ListarCategoriaResponseDto categoriaToListarCategoriaResponseDto(Categoria categoria);
 }
