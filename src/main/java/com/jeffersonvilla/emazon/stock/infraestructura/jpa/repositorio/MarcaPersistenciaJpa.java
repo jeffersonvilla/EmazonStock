@@ -2,7 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IMarcaPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.MarcaMapperJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.MarcaMapperJpa;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,12 +12,12 @@ import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
-public class MarcaPersistenciaJPA implements IMarcaPersistenciaPort {
+public class MarcaPersistenciaJpa implements IMarcaPersistenciaPort {
 
     private final MarcaRepository marcaRepository;
-    private final MarcaMapperJPA mapper;
+    private final MarcaMapperJpa mapper;
 
-    public MarcaPersistenciaJPA(MarcaRepository marcaRepository, MarcaMapperJPA mapper) {
+    public MarcaPersistenciaJpa(MarcaRepository marcaRepository, MarcaMapperJpa mapper) {
         this.marcaRepository = marcaRepository;
         this.mapper = mapper;
     }

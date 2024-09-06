@@ -5,7 +5,7 @@ import com.jeffersonvilla.emazon.stock.infraestructura.jpa.entidad.ArticuloEntit
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ArticuloMapperJPA {
+public interface ArticuloMapperJpa {
 
     Articulo articuloEntityToArticulo(ArticuloEntity entity);
     ArticuloEntity articuloToArticuloEntity(Articulo articulo);

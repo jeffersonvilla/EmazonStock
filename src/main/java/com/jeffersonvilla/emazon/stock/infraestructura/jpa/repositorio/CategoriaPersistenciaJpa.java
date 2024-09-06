@@ -2,7 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +14,10 @@ import java.util.Optional;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 @RequiredArgsConstructor
-public class CategoriaPersistenciaJPA implements ICategoriaPersistenciaPort {
+public class CategoriaPersistenciaJpa implements ICategoriaPersistenciaPort {
 
     private final CategoriaRepository categoriaRepository;
-    private final CategoriaMapperJPA mapper;
+    private final CategoriaMapperJpa mapper;
 
     @Override
     public Categoria crearCategoria(Categoria categoria) {

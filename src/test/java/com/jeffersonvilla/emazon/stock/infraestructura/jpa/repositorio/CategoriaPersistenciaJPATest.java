@@ -2,7 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.entidad.CategoriaEntity;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJpa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,10 +37,10 @@ class CategoriaPersistenciaJPATest {
     private CategoriaRepository categoriaRepository;
 
     @Mock
-    private CategoriaMapperJPA mapper;
+    private CategoriaMapperJpa mapper;
 
     @InjectMocks
-    private CategoriaPersistenciaJPA categoriaPersistenciaJPA;
+    private CategoriaPersistenciaJpa categoriaPersistenciaJPA;
 
     @BeforeEach
     void setUp() {

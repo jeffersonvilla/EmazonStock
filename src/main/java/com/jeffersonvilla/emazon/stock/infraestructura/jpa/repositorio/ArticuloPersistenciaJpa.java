@@ -2,7 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.ArticuloMapperJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.ArticuloMapperJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +14,10 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 @RequiredArgsConstructor
-public class ArticuloPersistenciaJPA implements IArticuloPersistenciaPort {
+public class ArticuloPersistenciaJpa implements IArticuloPersistenciaPort {
 
     private final ArticuloRepository articuloRepository;
-    private final ArticuloMapperJPA mapper;
+    private final ArticuloMapperJpa mapper;
 
     @Override
     public Articulo crearArticulo(Articulo articulo) {
