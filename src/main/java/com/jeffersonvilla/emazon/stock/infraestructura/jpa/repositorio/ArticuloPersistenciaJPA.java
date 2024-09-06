@@ -10,7 +10,8 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
 
 @RequiredArgsConstructor
 public class ArticuloPersistenciaJPA implements IArticuloPersistenciaPort {

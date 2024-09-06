@@ -30,7 +30,10 @@ import java.util.List;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ATRIBUTOS_PARA_LISTAR;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
-import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.LISTAR_POR_DEFAULT;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.ORDEN_DEFAULT;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.PAGINA_DEFAULT;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.TAMANO_DEFAULT;
 
 @Tag(name = "Articulo API", description = "Operaciones relacionadas con los artículos")
 @RequiredArgsConstructor

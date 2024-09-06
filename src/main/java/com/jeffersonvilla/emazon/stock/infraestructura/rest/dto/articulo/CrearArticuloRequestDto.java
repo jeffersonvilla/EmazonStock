@@ -7,7 +7,12 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_STOCK_MINIMA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.PRECIO_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_DESCRIPCION_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_NOMBRE_ARTICULO;
 
 public record CrearArticuloRequestDto(
         @NotNull @Size(max = TAMANO_MAXIMO_NOMBRE_ARTICULO)

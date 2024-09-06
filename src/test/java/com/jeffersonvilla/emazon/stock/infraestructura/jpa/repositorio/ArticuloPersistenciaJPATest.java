@@ -14,9 +14,17 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ArticuloPersistenciaJPATest {
 

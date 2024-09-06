@@ -3,9 +3,13 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.CreacionArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CategoriaNoExisteException;
-import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.*;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.CreacionCategoriaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria.ListarCategoriaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.CantidadNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.DescripcionNoValidaException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.IdNuloException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.NombreNoValidoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.general.PrecioNoValidoException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.CreacionMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.ListarMarcaException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteException;
@@ -21,7 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

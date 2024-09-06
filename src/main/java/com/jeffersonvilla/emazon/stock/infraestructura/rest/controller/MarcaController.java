@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.ORDEN_DEFAULT;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.PAGINA_DEFAULT;
+import static com.jeffersonvilla.emazon.stock.infraestructura.rest.util.Constantes.TAMANO_DEFAULT;
 
 @Tag(name = "Marca API", description = "Operaciones relacionadas con las marcas")
 @RequiredArgsConstructor

@@ -8,8 +8,15 @@ import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.PAGINA_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MINIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MAXIMA_CATEGORIAS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MINIMA_CATEGORIAS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ATRIBUTOS_PARA_LISTAR;
