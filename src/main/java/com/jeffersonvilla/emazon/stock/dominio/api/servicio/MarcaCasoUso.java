@@ -11,10 +11,20 @@ import com.jeffersonvilla.emazon.stock.dominio.spi.IMarcaPersistenciaPort;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.PAGINA_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_DESCRIPCION_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MAXIMO_NOMBRE_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NO_DISPONIBLE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PAGINA_VALOR_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.TAMANO_VALOR_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.DESCRIPCION_TAMANO_MAXIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.ID_NULO_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.MARCA_POR_ID_NO_EXISTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.NOMBRE_TAMANO_MAXIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
 
