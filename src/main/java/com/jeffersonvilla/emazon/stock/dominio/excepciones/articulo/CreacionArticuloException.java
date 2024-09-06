@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo;
 
-public class CreacionArticuloException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class CreacionArticuloException extends BadRequestException {
     public CreacionArticuloException(String message) {
         super(message);
     }

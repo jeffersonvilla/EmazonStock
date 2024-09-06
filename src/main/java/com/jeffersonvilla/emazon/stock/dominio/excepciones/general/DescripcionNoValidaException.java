@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.general;
 
-public class DescripcionNoValidaException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class DescripcionNoValidaException extends BadRequestException {
     public DescripcionNoValidaException(String message) {
         super(message);
     }

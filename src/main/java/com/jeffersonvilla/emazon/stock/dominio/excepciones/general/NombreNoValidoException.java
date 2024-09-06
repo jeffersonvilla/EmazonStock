@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.general;
 
-public class NombreNoValidoException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class NombreNoValidoException extends BadRequestException {
     public NombreNoValidoException(String message) {
         super(message);
     }

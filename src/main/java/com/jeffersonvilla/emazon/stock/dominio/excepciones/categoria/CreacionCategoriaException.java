@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.categoria;
 
-public class CreacionCategoriaException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class CreacionCategoriaException extends BadRequestException {
   public CreacionCategoriaException(String message) {
     super(message);
   }
