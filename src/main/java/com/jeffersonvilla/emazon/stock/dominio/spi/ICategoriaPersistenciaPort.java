@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface ICategoriaPersistenciaPort {
 
-    public Categoria crearCategoria(Categoria categoria);
-    public Optional<Categoria> obtenerCategoriaPorNombre(String nombre);
-    public Optional<Categoria> obtenerCategoriaPorId(Long id);
-    public List<Categoria> listarCategoriasPorNombre(int pagina, int tamano, String orden);
+    Categoria crearCategoria(Categoria categoria);
+    Optional<Categoria> obtenerCategoriaPorNombre(String nombre);
+    Optional<Categoria> obtenerCategoriaPorId(Long id);
+    List<Categoria> listarCategoriasPorNombre(int pagina, int tamano, String orden);
 }

@@ -2,7 +2,7 @@ package com.jeffersonvilla.emazon.stock.dominio.modelo;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MarcaTest {
 

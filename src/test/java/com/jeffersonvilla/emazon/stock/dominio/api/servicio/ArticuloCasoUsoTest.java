@@ -21,12 +21,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.*;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MAXIMA_CATEGORIAS;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MINIMA_CATEGORIAS;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_NEGATIVA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.PRECIO_NEGATIVO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ATRIBUTOS_PARA_LISTAR;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.CANTIDAD_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.DESCRIPCION_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PAGINA_VALOR_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PRECIO_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.TAMANO_VALOR_MINIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.MARCA_NULO;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ArticuloCasoUsoTest {
 

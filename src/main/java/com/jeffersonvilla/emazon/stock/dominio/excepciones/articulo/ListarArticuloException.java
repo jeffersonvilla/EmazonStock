@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo;
 
-public class ListarArticuloException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class ListarArticuloException extends BadRequestException {
     public ListarArticuloException(String message) {
         super(message);
     }

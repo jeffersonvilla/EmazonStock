@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 public interface MarcaMapperRest {
 
     @Mapping(target = "id", ignore = true)
-    public Marca crearMarcaRequestDtoToMarca(CrearMarcaRequestDto dto);
-    public CrearMarcaResponseDto marcaToCrearMarcaResponseDto(Marca marca);
-    public ListarMarcaResponseDto marcaToListarMarcaResponseDto(Marca marca);
+    Marca crearMarcaRequestDtoToMarca(CrearMarcaRequestDto dto);
+    CrearMarcaResponseDto marcaToCrearMarcaResponseDto(Marca marca);
+    ListarMarcaResponseDto marcaToListarMarcaResponseDto(Marca marca);
 }

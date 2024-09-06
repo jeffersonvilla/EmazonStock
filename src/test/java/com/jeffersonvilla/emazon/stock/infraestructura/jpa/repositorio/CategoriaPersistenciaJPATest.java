@@ -2,21 +2,34 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.entidad.CategoriaEntity;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJpa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CategoriaPersistenciaJPATest {
 
@@ -24,10 +37,10 @@ class CategoriaPersistenciaJPATest {
     private CategoriaRepository categoriaRepository;
 
     @Mock
-    private CategoriaMapperJPA mapper;
+    private CategoriaMapperJpa mapper;
 
     @InjectMocks
-    private CategoriaPersistenciaJPA categoriaPersistenciaJPA;
+    private CategoriaPersistenciaJpa categoriaPersistenciaJPA;
 
     @BeforeEach
     void setUp() {

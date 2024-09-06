@@ -1,6 +1,11 @@
 package com.jeffersonvilla.emazon.stock.dominio.util;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
+
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 
 public class MensajesErrorGenerales {
 

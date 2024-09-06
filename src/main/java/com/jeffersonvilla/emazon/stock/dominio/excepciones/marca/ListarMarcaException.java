@@ -1,6 +1,8 @@
 package com.jeffersonvilla.emazon.stock.dominio.excepciones.marca;
 
-public class ListarMarcaException extends RuntimeException {
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
+
+public class ListarMarcaException extends BadRequestException {
     public ListarMarcaException(String message) {
         super(message);
     }

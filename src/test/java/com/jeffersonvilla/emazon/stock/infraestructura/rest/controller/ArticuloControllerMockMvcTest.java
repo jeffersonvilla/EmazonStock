@@ -9,7 +9,11 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteEx
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.*;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloReponseCategoriaDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.ArticuloMapperRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +35,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ArticuloController.class)
 class ArticuloControllerMockMvcTest {

@@ -3,8 +3,8 @@ package com.jeffersonvilla.emazon.stock.configuracion;
 import com.jeffersonvilla.emazon.stock.dominio.api.IArticuloServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.servicio.ArticuloCasoUso;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.ArticuloMapperJPA;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.ArticuloPersistenciaJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.ArticuloMapperJpa;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.ArticuloPersistenciaJpa;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.ArticuloRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class ArticuloConfig {
 
     private final ArticuloRepository articuloRepository;
-    private final ArticuloMapperJPA articuloMapperJPA;
+    private final ArticuloMapperJpa articuloMapperJPA;
 
     @Bean
     public IArticuloServicePort articuloServicePort(){
@@ -24,6 +24,6 @@ public class ArticuloConfig {
 
     @Bean
     public IArticuloPersistenciaPort articuloPersistenciaPort(){
-        return new ArticuloPersistenciaJPA(articuloRepository, articuloMapperJPA);
+        return new ArticuloPersistenciaJpa(articuloRepository, articuloMapperJPA);
     }
 }

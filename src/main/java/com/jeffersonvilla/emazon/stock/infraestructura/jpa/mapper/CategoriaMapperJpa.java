@@ -5,8 +5,8 @@ import com.jeffersonvilla.emazon.stock.infraestructura.jpa.entidad.CategoriaEnti
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface CategoriaMapperJPA {
+public interface CategoriaMapperJpa {
 
-    public CategoriaEntity categoriaToCategoriaEntity(Categoria categoria);
-    public Categoria categoriaEntityToCategoria(CategoriaEntity entity);
+    CategoriaEntity categoriaToCategoriaEntity(Categoria categoria);
+    Categoria categoriaEntityToCategoria(CategoriaEntity entity);
 }

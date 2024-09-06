@@ -10,7 +10,12 @@ import java.math.BigDecimal;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_STOCK_MINIMA;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_NEGATIVA;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.PRECIO_NEGATIVO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.CANTIDAD_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.DESCRIPCION_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.DESCRIPCION_VACIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_NULL;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.NOMBRE_VACIO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PRECIO_NULL;
 
 public class ValidacionCamposModelo {
 

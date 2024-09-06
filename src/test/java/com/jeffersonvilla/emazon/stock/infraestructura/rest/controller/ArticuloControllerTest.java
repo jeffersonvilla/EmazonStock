@@ -9,7 +9,11 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteEx
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
-import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.*;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloReponseCategoriaDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.ArticuloMapperRest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +32,17 @@ import java.util.Set;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ArticuloControllerTest {
 

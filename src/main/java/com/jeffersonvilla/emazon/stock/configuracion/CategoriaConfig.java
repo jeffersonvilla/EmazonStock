@@ -3,8 +3,8 @@ package com.jeffersonvilla.emazon.stock.configuracion;
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.servicio.CategoriaCasoUso;
 import com.jeffersonvilla.emazon.stock.dominio.spi.ICategoriaPersistenciaPort;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJPA;
-import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.CategoriaPersistenciaJPA;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.CategoriaMapperJpa;
+import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.CategoriaPersistenciaJpa;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio.CategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class CategoriaConfig {
 
     private final CategoriaRepository categoriaRepository;
-    private final CategoriaMapperJPA categoriaMapperJPA;
+    private final CategoriaMapperJpa categoriaMapperJPA;
 
     @Bean
     public ICategoriaServicePort categoriaServicePort(){
@@ -24,6 +24,6 @@ public class CategoriaConfig {
 
     @Bean
     public ICategoriaPersistenciaPort categoriaPersistenciaPort(){
-        return new CategoriaPersistenciaJPA(categoriaRepository, categoriaMapperJPA);
+        return new CategoriaPersistenciaJpa(categoriaRepository, categoriaMapperJPA);
     }
 }

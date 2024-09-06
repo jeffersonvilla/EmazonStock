@@ -8,13 +8,26 @@ import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
 
 import java.util.List;
 
-import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_MARCA;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.PAGINA_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MINIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MAXIMA_CATEGORIAS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MINIMA_CATEGORIAS;
-import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ATRIBUTOS_PARA_LISTAR;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PAGINA_VALOR_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.TAMANO_VALOR_MINIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorMarca.MARCA_NULO;
-import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.*;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarCantidadNoNuloNiNegativo;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarDescripcionNoNuloNiVacio;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarNombreNoNuloNiVacio;
+import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarPrecioNoNuloNiNegativo;
 
 public class ArticuloCasoUso implements IArticuloServicePort {
 

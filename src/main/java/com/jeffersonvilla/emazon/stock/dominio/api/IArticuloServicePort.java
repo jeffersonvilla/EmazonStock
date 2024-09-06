@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IArticuloServicePort {
 
-    public Articulo crearArticulo(Articulo articulo);
+    Articulo crearArticulo(Articulo articulo);
 
-    public List<Articulo> listarArticulo(int pagina, int tamano, String orden, String listarPor);
+    List<Articulo> listarArticulo(int pagina, int tamano, String orden, String listarPor);
 }
