@@ -15,14 +15,19 @@ import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearAr
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloReponseCategoriaDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.ArticuloMapperRest;
+import com.jeffersonvilla.emazon.stock.infraestructura.seguridad.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -31,22 +36,29 @@ import java.util.Set;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCENDENTE;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ROL_ADMIN;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(ArticuloController.class)
+@WithMockUser(username = "admin", authorities = {ROL_ADMIN})
 class ArticuloControllerMockMvcTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private ArticuloMapperRest mapper;
@@ -60,6 +72,9 @@ class ArticuloControllerMockMvcTest {
     @MockBean
     private IArticuloServicePort articuloApi;
 
+    @MockBean
+    private JwtService jwtService;
+
     private CrearArticuloRequestDto crearArticuloRequestDto;
     private Articulo articulo;
     private Marca marca;
@@ -68,7 +83,11 @@ class ArticuloControllerMockMvcTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
 
         marca = new Marca(1L, "Marca1", "Descripción marca");
         categoria = new Categoria(1L, "Electrónica",
@@ -93,6 +112,7 @@ class ArticuloControllerMockMvcTest {
 
     @Test
     void testCrearArticuloConExito() throws Exception {
+
         when(mapper.crearArticuloRequestDtoToArticulo(crearArticuloRequestDto)).thenReturn(articulo);
         when(marcaApi.obtenerMarcaPorId(1L)).thenReturn(marca);
         when(categoriaApi.obtenerCategoriaPorId(1L)).thenReturn(categoria);
@@ -102,6 +122,7 @@ class ArticuloControllerMockMvcTest {
         String requestJson = objectMapper.writeValueAsString(crearArticuloRequestDto);
 
         mockMvc.perform(post("/articulo/crear")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
@@ -123,6 +144,7 @@ class ArticuloControllerMockMvcTest {
         when(marcaApi.obtenerMarcaPorId(1L)).thenThrow(new MarcaNoExisteException("Marca no existe"));
 
         mockMvc.perform(post("/articulo/crear")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(crearArticuloRequestDto)))
                 .andExpect(status().isNotFound())
@@ -136,6 +158,7 @@ class ArticuloControllerMockMvcTest {
         when(categoriaApi.obtenerCategoriaPorId(1L)).thenThrow(new CategoriaNoExisteException("Categoría no existe"));
 
         mockMvc.perform(post("/articulo/crear")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(crearArticuloRequestDto)))
                 .andExpect(status().isNotFound())

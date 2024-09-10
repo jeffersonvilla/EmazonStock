@@ -33,4 +33,6 @@ public class Constantes {
     public static final String LISTAR_POR_MARCA = "marca";
     public static final String LISTAR_POR_CATEGORIA = "categorias";
 
+    public static final String ROL_ADMIN = "admin";
+
 }
