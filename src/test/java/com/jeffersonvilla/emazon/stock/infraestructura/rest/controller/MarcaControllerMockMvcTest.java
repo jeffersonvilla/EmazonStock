@@ -6,36 +6,62 @@ import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.marca.ListarMarc
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.marca.CrearMarcaRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.marca.CrearMarcaResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper.MarcaMapperRest;
+import com.jeffersonvilla.emazon.stock.infraestructura.seguridad.JwtService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ROL_ADMIN;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(MarcaController.class)
+@WithMockUser(username = "admin", authorities = {ROL_ADMIN})
 class MarcaControllerMockMvcTest {
 
-    @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private IMarcaServicePort marcaApi;
 
     @MockBean
     private MarcaMapperRest mapper;
+
+    @MockBean
+    private JwtService jwtService;
+
+    @BeforeEach
+    void setUp() {
+
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @Test
     void testCrearMarca() throws Exception {
@@ -56,6 +82,7 @@ class MarcaControllerMockMvcTest {
         String requestJson = "{\"nombre\": \""+nombre+"\", \"descripcion\": \""+descripcion+"\"}";
 
         mockMvc.perform(post("/marca/crear")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
