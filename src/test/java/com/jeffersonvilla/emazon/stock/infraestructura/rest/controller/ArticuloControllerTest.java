@@ -9,6 +9,8 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteEx
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
@@ -83,8 +85,13 @@ class ArticuloControllerTest {
                 Set.of(new CrearArticuloRequestCategoriaDto(1L))
         );
 
-        articulo = new Articulo(1L, "Laptop", "Laptop gaming",
-                10, BigDecimal.valueOf(1200.00), null, null);
+        articulo = new Articulo.ArticuloBuilder()
+                .setId(1L)
+                .setNombre("Laptop")
+                .setDescripcion("Laptop gaming")
+                .setCantidad(5)
+                .setPrecio(BigDecimal.valueOf(1200.0))
+                .build();
 
         crearArticuloResponseDto = new CrearArticuloResponseDto(1L, "Laptop",
                 "Laptop gaming", 10, BigDecimal.valueOf(1200.00),
@@ -228,6 +235,27 @@ class ArticuloControllerTest {
         verify(articuloApi, times(1))
                 .listarArticulo(pagina, tamano, orden, listarPor);
         verify(mapper, never()).articuloToListarArticuloResponseDto(any(Articulo.class));
+    }
+
+    @Test
+    void testAumentarStockExito(){
+
+        AumentarCantidadStockRequestDto request = new AumentarCantidadStockRequestDto(1L, 5);
+        AumentarCantidadStockResponseDto response =
+                new AumentarCantidadStockResponseDto(1L, "Computador", 15);
+
+        Articulo articuloMock = mock(Articulo.class);
+
+        when(articuloApi.aumentarCantidadStock(request.idArticulo(), request.cantidad())).thenReturn(articuloMock);
+        when(mapper.articuloToAumentarCantidadStockResponseDto(articuloMock)).thenReturn(response);
+
+        ResponseEntity<AumentarCantidadStockResponseDto> respuesta = articuloController.aumentarStock(request);
+
+        assertEquals(HttpStatus.OK, respuesta.getStatusCode());
+        assertEquals(response, respuesta.getBody());
+
+        verify(articuloApi).aumentarCantidadStock(request.idArticulo(), request.cantidad());
+        verify(mapper).articuloToAumentarCantidadStockResponseDto(articuloMock);
     }
 
 }

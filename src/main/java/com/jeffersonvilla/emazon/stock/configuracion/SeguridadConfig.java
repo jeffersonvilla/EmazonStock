@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ROL_ADMIN;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ROL_AUX_BODEGA;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +33,9 @@ public class SeguridadConfig {
                         .requestMatchers(
                                 "/articulo/crear", "/categoria/crear", "/marca/crear")
                         .hasAuthority(ROL_ADMIN)
+                        .requestMatchers(
+                                "/articulo/aumentar/stock")
+                        .hasAuthority(ROL_AUX_BODEGA)
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session ->

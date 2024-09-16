@@ -9,6 +9,8 @@ import com.jeffersonvilla.emazon.stock.dominio.excepciones.marca.MarcaNoExisteEx
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Categoria;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Marca;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestCategoriaDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
@@ -42,6 +44,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -102,8 +105,13 @@ class ArticuloControllerMockMvcTest {
                 Set.of(new CrearArticuloRequestCategoriaDto(1L))
         );
 
-        articulo = new Articulo(1L, "Laptop", "Laptop gaming",
-                10, BigDecimal.valueOf(1200.00), null, null);
+        articulo = new Articulo.ArticuloBuilder()
+                .setId(1L)
+                .setNombre("Laptop")
+                .setDescripcion("Laptop gaming")
+                .setCantidad(5)
+                .setPrecio(BigDecimal.valueOf(1200.0))
+                .build();
 
         crearArticuloResponseDto = new CrearArticuloResponseDto(1L, "Laptop",
                 "Laptop gaming", 10, BigDecimal.valueOf(1200.00),
@@ -217,5 +225,29 @@ class ArticuloControllerMockMvcTest {
                 .andExpect(jsonPath("$[1].categorias[0].id").value(categoria2.id()))
                 .andExpect(jsonPath("$[1].categorias[0].nombre").value(categoria2.nombre()));
 
+    }
+
+    @Test
+    void testAumentarStockExito() throws Exception{
+
+        AumentarCantidadStockRequestDto request = new AumentarCantidadStockRequestDto(1L, 5);
+        AumentarCantidadStockResponseDto response =
+                new AumentarCantidadStockResponseDto(1L, "Computador", 15);
+
+        Articulo articuloMock = mock(Articulo.class);
+
+        when(articuloApi.aumentarCantidadStock(request.idArticulo(), request.cantidad())).thenReturn(articuloMock);
+        when(mapper.articuloToAumentarCantidadStockResponseDto(articuloMock)).thenReturn(response);
+
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(patch("/articulo/aumentar/stock")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.idArticulo").value(response.idArticulo()))
+                .andExpect(jsonPath("$.nombre").value(response.nombre()))
+                .andExpect(jsonPath("$.cantidad").value(response.cantidad()));
     }
 }

@@ -4,6 +4,8 @@ import com.jeffersonvilla.emazon.stock.dominio.api.IArticuloServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.ICategoriaServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.api.IMarcaServicePort;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockRequestDto;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloResponseDto;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,5 +111,32 @@ public class ArticuloController {
                 ),
                 HttpStatus.CREATED
         );
+    }
+
+    @Operation(summary = "Aumentar cantidad en stock",
+            description = "Aumenta la cantidad en stock del artículo con los datos suministrados en el body.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Artículo actualizado exitosamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AumentarCantidadStockResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = "application/json"))
+    })
+    @PatchMapping("aumentar/stock")
+    public ResponseEntity<AumentarCantidadStockResponseDto> aumentarStock(
+            @Valid
+            @RequestBody
+            AumentarCantidadStockRequestDto stockDto
+    ){
+        return new ResponseEntity<>(
+                mapper.articuloToAumentarCantidadStockResponseDto(
+                        articuloApi.aumentarCantidadStock(
+                                stockDto.idArticulo(),
+                                stockDto.cantidad()
+                        )
+                ),
+                HttpStatus.OK);
     }
 }

@@ -9,4 +9,6 @@ public interface IArticuloServicePort {
     Articulo crearArticulo(Articulo articulo);
 
     List<Articulo> listarArticulo(int pagina, int tamano, String orden, String listarPor);
+
+    Articulo aumentarCantidadStock(long idArticulo, int cantidad);
 }

@@ -7,6 +7,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ArticuloMapperJpa {
 
-    Articulo articuloEntityToArticulo(ArticuloEntity entity);
+    default Articulo articuloEntityToArticulo(ArticuloEntity entity){
+        return articuloEntityToArticuloBuilder(entity).build();
+    }
     ArticuloEntity articuloToArticuloEntity(Articulo articulo);
+
+    Articulo.ArticuloBuilder articuloEntityToArticuloBuilder(ArticuloEntity entity);
 }

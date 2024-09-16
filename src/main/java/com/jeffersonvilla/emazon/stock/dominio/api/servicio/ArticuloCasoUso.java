@@ -1,12 +1,15 @@
 package com.jeffersonvilla.emazon.stock.dominio.api.servicio;
 
 import com.jeffersonvilla.emazon.stock.dominio.api.IArticuloServicePort;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.NoEncontradoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ActualizacionArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.CreacionArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ListarArticuloException;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO;
@@ -17,8 +20,10 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_ASCE
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.ORDEN_DESCENDENTE;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.PAGINA_MINIMO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.TAMANO_MINIMO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.ARTICULO_NO_ENCONTRADO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MAXIMA_CATEGORIAS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.CANTIDAD_MINIMA_CATEGORIAS;
+import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorArticulo.ERROR_AUMENTANDO_STOCK;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ATRIBUTOS_PARA_LISTAR;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.ORDENES_VALIDOS;
 import static com.jeffersonvilla.emazon.stock.dominio.util.MensajesErrorGenerales.PAGINA_VALOR_MINIMO;
@@ -30,6 +35,9 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModel
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarPrecioNoNuloNiNegativo;
 
 public class ArticuloCasoUso implements IArticuloServicePort {
+
+    private static final int INICIO_CICLO = 0;
+    private static final int FINAL_CICLO = 2;
 
     private final IArticuloPersistenciaPort persistencia;
 
@@ -70,6 +78,32 @@ public class ArticuloCasoUso implements IArticuloServicePort {
         }
 
         return persistencia.listarArticulos(pagina, tamano, orden, listarPor);
+    }
+
+    @Override
+    public Articulo aumentarCantidadStock(long idArticulo, int cantidad) {
+
+        for(int i = INICIO_CICLO; i <= FINAL_CICLO; i++) {
+
+            Optional<Articulo> articuloEncontrado = persistencia.obtenerArticuloPorId(idArticulo);
+
+            if (articuloEncontrado.isEmpty()) {
+                throw new NoEncontradoException(ARTICULO_NO_ENCONTRADO);
+            }
+
+            Articulo articulo = articuloEncontrado.get();
+
+            articulo.aumentarCantidad(cantidad);
+
+            try {
+
+                return persistencia.actualizarCantidadStock(articulo);
+
+            } catch (RuntimeException ex){
+                if(i == FINAL_CICLO) break;
+            }
+        }
+        throw new ActualizacionArticuloException(ERROR_AUMENTANDO_STOCK);
     }
 
     private void realizarValidaciones(Articulo articulo){

@@ -2,6 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.NoEncontradoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ActualizacionArticuloException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -33,6 +34,16 @@ public class ManejadorExcepciones {
         );
     }
 
+    @ExceptionHandler(ActualizacionArticuloException.class)
+    public ResponseEntity<RespuestaError> handleActualizacionArticuloException(
+            ActualizacionArticuloException ex){
+
+        return new ResponseEntity<>(
+                new RespuestaError(HttpStatus.INTERNAL_SERVER_ERROR.toString(), ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<RespuestaError> handleIllegalStateException(
             IllegalStateException ex){
@@ -42,6 +53,7 @@ public class ManejadorExcepciones {
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<RespuestaConVariosErrores> handleMethodArgumentNotValidException(

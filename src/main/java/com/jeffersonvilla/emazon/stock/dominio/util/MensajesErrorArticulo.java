@@ -13,4 +13,8 @@ public class MensajesErrorArticulo {
     public static final String CANTIDAD_NEGATIVA = "La cantidad no puede ser negativa ";
 
     public static final String PRECIO_NEGATIVO = "El precio no puede ser negativo";
+
+    public static final String ARTICULO_NO_ENCONTRADO = "El articulo no existe";
+
+    public static final String ERROR_AUMENTANDO_STOCK = "No se ha podido aumentar el stock del articulo";
 }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
@@ -101,5 +102,43 @@ class ArticuloPersistenciaJPATest {
                 .findAll(any(Pageable.class));
         verify(mapper, never())
                 .articuloEntityToArticulo(any(ArticuloEntity.class));
+    }
+
+    @Test
+    void testObtenerArticuloPorIdExito(){
+
+        long idArticulo = 1L;
+
+        ArticuloEntity articuloEntity = mock(ArticuloEntity.class);
+        Articulo articulo = mock(Articulo.class);
+
+        when(articuloRepository.findById(idArticulo)).thenReturn(Optional.of(articuloEntity));
+        when(mapper.articuloEntityToArticulo(articuloEntity)).thenReturn(articulo);
+
+        Optional<Articulo> respuesta = articuloPersistenciaJPA.obtenerArticuloPorId(idArticulo);
+
+        assertEquals(articulo, respuesta.get());
+
+        verify(articuloRepository).findById(idArticulo);
+        verify(mapper).articuloEntityToArticulo(articuloEntity);
+    }
+
+    @Test
+    void testActualizarCantidadStockExito(){
+
+        ArticuloEntity articuloEntity = mock(ArticuloEntity.class);
+        Articulo articulo = mock(Articulo.class);
+
+        when(mapper.articuloToArticuloEntity(articulo)).thenReturn(articuloEntity);
+        when(articuloRepository.save(articuloEntity)).thenReturn(articuloEntity);
+        when(mapper.articuloEntityToArticulo(articuloEntity)).thenReturn(articulo);
+
+        Articulo respuesta = articuloPersistenciaJPA.actualizarCantidadStock(articulo);
+
+        assertEquals(articulo, respuesta);
+
+        verify(mapper).articuloEntityToArticulo(any(ArticuloEntity.class));
+        verify(mapper).articuloToArticuloEntity(any(Articulo.class));
+        verify(articuloRepository).save(any(ArticuloEntity.class));
     }
 }
