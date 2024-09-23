@@ -26,6 +26,7 @@ public class Constantes {
 
     public static final int CANTIDAD_STOCK_MINIMA = 0;
     public static final int PRECIO_MINIMO = 0;
+    public static final int CANTIDAD_AUMENTO_MINIMO_CANTIDAD_STOCK = 1;
 
     public static final String SORT_NOMBRE = "nombre";
 
@@ -34,5 +35,9 @@ public class Constantes {
     public static final String LISTAR_POR_CATEGORIA = "categorias";
 
     public static final String ROL_ADMIN = "admin";
+    public static final String ROL_AUX_BODEGA = "aux_bodega";
+
+    public static final int INICIO_CICLO = 1;
+    public static final int INTENTOS_AUMENTAR_CANTIDAD_STOCK = 3;
 
 }

@@ -3,12 +3,14 @@ package com.jeffersonvilla.emazon.stock.infraestructura.jpa.repositorio;
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
 import com.jeffersonvilla.emazon.stock.dominio.spi.IArticuloPersistenciaPort;
 import com.jeffersonvilla.emazon.stock.infraestructura.jpa.mapper.ArticuloMapperJpa;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.SORT_NOMBRE;
@@ -37,4 +39,18 @@ public class ArticuloPersistenciaJpa implements IArticuloPersistenciaPort {
         return articuloRepository.findAll(pageable).map(mapper::articuloEntityToArticulo).toList();
     }
 
+    @Override
+    public Optional<Articulo> obtenerArticuloPorId(long id) {
+        return articuloRepository.findById(id).map(mapper::articuloEntityToArticulo);
+    }
+
+    @Override
+    @Transactional
+    public Articulo actualizarCantidadStock(Articulo articulo) {
+        return mapper.articuloEntityToArticulo(
+                articuloRepository.save(
+                        mapper.articuloToArticuloEntity(articulo)
+                )
+        );
+    }
 }

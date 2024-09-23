@@ -2,6 +2,7 @@ package com.jeffersonvilla.emazon.stock.infraestructura.rest.excepciones;
 
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.BadRequestException;
 import com.jeffersonvilla.emazon.stock.dominio.excepciones.NoEncontradoException;
+import com.jeffersonvilla.emazon.stock.dominio.excepciones.articulo.ActualizacionArticuloException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,20 @@ class ManejadorExcepcionesTest {
         assertEquals(mensajeError, response.getBody().message());
     }
 
+    @Test
+    void testHandleActualizacionArticuloException() {
+        String mensajeError = "Error interno";
+        ActualizacionArticuloException excepcion = new ActualizacionArticuloException(mensajeError);
+
+        ResponseEntity<RespuestaError> response = manejadorExcepciones
+                .handleActualizacionArticuloException(excepcion);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.toString(), response.getBody().status());
+        assertEquals(mensajeError, response.getBody().message());
+    }
 
     @Test
     void testHandleIllegalStateException() {

@@ -27,8 +27,16 @@ class ArticuloTest {
         Set<Categoria> categorias = new HashSet<>();
         categorias.add(categoria1);
 
-        articulo = new Articulo(1L, "Computador", "Computador portátil",
-                10, BigDecimal.valueOf(1200.00), marca, categorias);
+        articulo = new Articulo.ArticuloBuilder()
+                .setId(1L)
+                .setNombre("Computador")
+                .setDescripcion("Computador portátil")
+                .setCantidad(10)
+                .setPrecio(BigDecimal.valueOf(1200.0))
+                .setMarca(marca)
+                .setCategorias(categorias)
+                .setVersion(1)
+                .build();
     }
 
     @Test
@@ -69,6 +77,11 @@ class ArticuloTest {
     }
 
     @Test
+    void testGetVersion(){
+        assertEquals(1, articulo.getVersion());
+    }
+
+    @Test
     void testSetMarca() {
         Marca nuevaMarca = mock(Marca.class);
         articulo.setMarca(nuevaMarca);
@@ -88,10 +101,27 @@ class ArticuloTest {
 
     @Test
     void testCrearArticuloConCategoriasNull() {
-        Articulo articuloSinCategorias = new Articulo(2L, "Tablet", "Tablet de 10 pulgadas",
-                5, BigDecimal.valueOf(300.00), marca, null);
+        Articulo articuloSinCategorias = new Articulo.ArticuloBuilder()
+                .setId(1L)
+                .setNombre("Laptop")
+                .setDescripcion("Laptop gaming")
+                .setCantidad(5)
+                .setPrecio(BigDecimal.valueOf(1200.0))
+                .setMarca(mock(Marca.class))
+                .build();
 
         assertNotNull(articuloSinCategorias.getCategorias());
         assertTrue(articuloSinCategorias.getCategorias().isEmpty());
+    }
+
+    @Test
+    void testAumentarCantidad(){
+        int cantidadAumento = 5;
+        int cantidadAnterior = articulo.getCantidad();
+        int nuevaCantidad = cantidadAnterior + cantidadAumento;
+
+        articulo.aumentarCantidad(cantidadAumento);
+
+        assertEquals(nuevaCantidad, articulo.getCantidad());
     }
 }

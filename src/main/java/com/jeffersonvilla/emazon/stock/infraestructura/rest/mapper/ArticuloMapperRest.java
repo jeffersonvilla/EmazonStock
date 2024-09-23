@@ -1,6 +1,7 @@
 package com.jeffersonvilla.emazon.stock.infraestructura.rest.mapper;
 
 import com.jeffersonvilla.emazon.stock.dominio.modelo.Articulo;
+import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.AumentarCantidadStockResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloRequestDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.CrearArticuloResponseDto;
 import com.jeffersonvilla.emazon.stock.infraestructura.rest.dto.articulo.ListarArticuloResponseDto;
@@ -13,7 +14,16 @@ public interface ArticuloMapperRest {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "marca", ignore = true)
     @Mapping(target = "categorias", ignore = true)
-    Articulo crearArticuloRequestDtoToArticulo(CrearArticuloRequestDto dto);
+    @Mapping(target = "version", ignore = true)
+    Articulo.ArticuloBuilder crearArticuloRequestDtoToArticuloBuilder(CrearArticuloRequestDto dto);
+
+    default Articulo crearArticuloRequestDtoToArticulo(CrearArticuloRequestDto dto){
+        return crearArticuloRequestDtoToArticuloBuilder(dto).build();
+    }
+
     CrearArticuloResponseDto articuloToCrearArticuloResponseDto(Articulo articulo);
     ListarArticuloResponseDto articuloToListarArticuloResponseDto(Articulo articulo);
+
+    @Mapping(target = "idArticulo", source = "id")
+    AumentarCantidadStockResponseDto articuloToAumentarCantidadStockResponseDto(Articulo articulo);
 }

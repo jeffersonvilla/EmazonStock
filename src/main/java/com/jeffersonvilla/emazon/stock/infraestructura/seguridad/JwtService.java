@@ -12,14 +12,13 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.ROL_USUARIO_CLAIM;
+
 @Service
 public class JwtService {
 
     @Value("${CLAVE_JWT}")
-    // clave para test unitarios
-    private String claveSecreta = "a522a5d03de1e7364f4985067bba67f4a0d6e4e1ed482d07bb70b94a39f1580a8ce82094888ff449bc23a9bfc6715dbdcd82347c94127536825f468d3e4a2186c20ca826705d642bcf486e0cbebf1a7df0b68d37772c8ddce876d500ee895492289380ed4049ccfc0a7f8dfe700ddb52e56b6c9d658e32a1e2134fed35870dc83ba4b47c3336153e779babf72cab925002fec514c31e14fa09d3471a8bb178fd06baef291ad65f7058a09b4499ba30ae923002d6c9b469b440970486eac0b0523ade7421e465fce4012bca6bd2b5580c52f3212e0ec64bc0f5c5afca71bf1e8f6040fd83c7fdbec33e615d29c6a52d40e3615cf3aa55c014b3a1c1550f26008c";
-
-    private static final String ROL_USUARIO_CLAIM = "rol";
+    private String claveSecreta;
 
     public String extraerUsername(String token) {
         return extractClaim(token, Claims::getSubject);

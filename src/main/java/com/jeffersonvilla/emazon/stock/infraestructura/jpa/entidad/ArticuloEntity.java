@@ -10,6 +10,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,4 +56,8 @@ public class ArticuloEntity {
             inverseJoinColumns = @JoinColumn(name = "id_categoria")
     )
     private Set<CategoriaEntity> categorias;
+
+    @Version
+    @Column(name = "version", columnDefinition = "INT")
+    private Integer version;
 }
