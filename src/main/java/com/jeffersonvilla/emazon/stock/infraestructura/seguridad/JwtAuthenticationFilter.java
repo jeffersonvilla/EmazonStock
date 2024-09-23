@@ -23,18 +23,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.AUTHORIZATION;
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.BEARER;
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.JWT_TOKEN_EXPIRADO;
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.JWT_TOKEN_NO_VALIDO;
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.TAMANO_HEADER;
+
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String BEARER = "Bearer ";
-    private static final Integer TAMANO_HEADER = 7;
-
-    private static final String JWT_TOKEN_EXPIRADO = "El token jwt ha expirado";
-    private static final String JWT_TOKEN_NO_VALIDO = "El token jwt no es válido";
 
     @Override
     protected void doFilterInternal(

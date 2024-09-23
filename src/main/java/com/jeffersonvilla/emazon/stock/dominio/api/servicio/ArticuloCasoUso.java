@@ -13,6 +13,8 @@ import java.util.Optional;
 
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MAXIMA_CATEGORIAS_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.CANTIDAD_MINIMA_CATEGORIAS_POR_ARTICULO;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.INTENTOS_AUMENTAR_CANTIDAD_STOCK;
+import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.INICIO_CICLO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_ARTICULO;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_CATEGORIA;
 import static com.jeffersonvilla.emazon.stock.dominio.util.Constantes.LISTAR_POR_MARCA;
@@ -35,9 +37,6 @@ import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModel
 import static com.jeffersonvilla.emazon.stock.dominio.util.ValidacionCamposModelo.validarPrecioNoNuloNiNegativo;
 
 public class ArticuloCasoUso implements IArticuloServicePort {
-
-    private static final int INICIO_CICLO = 0;
-    private static final int FINAL_CICLO = 2;
 
     private final IArticuloPersistenciaPort persistencia;
 
@@ -83,7 +82,7 @@ public class ArticuloCasoUso implements IArticuloServicePort {
     @Override
     public Articulo aumentarCantidadStock(long idArticulo, int cantidad) {
 
-        for(int i = INICIO_CICLO; i <= FINAL_CICLO; i++) {
+        for(int i = INICIO_CICLO; i <= INTENTOS_AUMENTAR_CANTIDAD_STOCK; i++) {
 
             Optional<Articulo> articuloEncontrado = persistencia.obtenerArticuloPorId(idArticulo);
 
@@ -100,7 +99,7 @@ public class ArticuloCasoUso implements IArticuloServicePort {
                 return persistencia.actualizarCantidadStock(articulo);
 
             } catch (RuntimeException ex){
-                if(i == FINAL_CICLO) break;
+                if(i == INTENTOS_AUMENTAR_CANTIDAD_STOCK) break;
             }
         }
         throw new ActualizacionArticuloException(ERROR_AUMENTANDO_STOCK);

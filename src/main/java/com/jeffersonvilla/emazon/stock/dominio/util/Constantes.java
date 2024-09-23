@@ -37,4 +37,7 @@ public class Constantes {
     public static final String ROL_ADMIN = "admin";
     public static final String ROL_AUX_BODEGA = "aux_bodega";
 
+    public static final int INICIO_CICLO = 1;
+    public static final int INTENTOS_AUMENTAR_CANTIDAD_STOCK = 3;
+
 }

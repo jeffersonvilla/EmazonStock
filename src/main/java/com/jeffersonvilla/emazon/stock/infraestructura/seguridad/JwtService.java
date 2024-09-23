@@ -12,13 +12,13 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+import static com.jeffersonvilla.emazon.stock.infraestructura.seguridad.Constantes.ROL_USUARIO_CLAIM;
+
 @Service
 public class JwtService {
 
     @Value("${CLAVE_JWT}")
     private String claveSecreta;
-
-    private static final String ROL_USUARIO_CLAIM = "rol";
 
     public String extraerUsername(String token) {
         return extractClaim(token, Claims::getSubject);
